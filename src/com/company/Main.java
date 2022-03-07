@@ -1,7 +1,8 @@
 package com.company;
 
-import javax.swing.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
@@ -21,20 +22,17 @@ public class Main {
 
         // test de la classe Membre
 
-        ArrayList<Membre> liste = new ArrayList<>();
-        liste.add(new Membre( "Poirier", "Vincent"));
-        liste.add(new Membre(  "Lainesse", "Maxime"));
-        liste.add(new Membre(  "Poutine", "Vladimir"));
-        liste.add(new Membre(  "Washington", "George"));
-        liste.add(new Membre(  "Curie", "Marie"));
+        Map<String, Member> members = new HashMap<>();
+        Member tempMemb = new Member("Poirier", "Vincent");
+        members.put(tempMemb.getID, tempMemb);
 
 
-        for ( Membre ls : liste) {
+        //for ( Member ls : members) {
 
-           ls.afficher();
-            System.out.println("_____________________");
+        //   ls.afficher();
+        //    System.out.println("_____________________");
 
-        }
+        //}
 
         //Fin testing des classes
     }

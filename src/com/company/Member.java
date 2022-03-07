@@ -1,21 +1,22 @@
 package com.company;
 
 
-public class Membre {
+public class Member {
 
-    public
-    int num=0;
-    char init;
+    public static int num = 1;
     //attributs
     private String nom;
     private String prenom;
+    private int memNum;
+    private char init;
 
 
-    public Membre(String p_nom, String p_prenom) {
-
+    public Member(String p_nom, String p_prenom) {
         this.setNom(p_nom);
         this.setPrenom(p_prenom);
         this.setInit();
+        this.memNum = num;
+        num++;
     }
 
     public String getNom() {
@@ -39,10 +40,9 @@ public class Membre {
    }
 
     public void afficher() {
-        num++;
         System.out.printf(
-                     "Numero: "+num+"%n"
-                    +"id#: "+ num+init+"%n"
+                     "Numero: "+memNum+"%n"
+                    +"id#: "+ memNum+init+"%n"
                     +"nom: "+ nom +"%n"
                     +"prenom: "+ prenom +"%n");
     }
