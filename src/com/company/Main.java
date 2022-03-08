@@ -1,9 +1,6 @@
 package com.company;
 
-import javax.print.Doc;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Main {
@@ -34,9 +31,15 @@ public class Main {
 
         // test de la classe Membre
 
-        //Map<String, Member> members = new HashMap<>();
-        //Member tempMemb = new Member("Poirier", "Vincent");
-        //members.put(tempMemb.getID, tempMemb);
+        Map<String, Member> members = new HashMap<>();
+        Member tempMemb = new Member("César", "Jules");
+        members.put(tempMemb.getMemID(), tempMemb);
+        System.out.println();
+
+        Map<String, Emprunt> emprunts = new HashMap<>();
+        Emprunt tempEmp = new Emprunt("01-01-2022", "16-01-2202","1CÉS","RR");
+        emprunts.put(tempEmp.getEmp(), tempEmp);
+        System.out.println();
 
 
         //for ( Member ls : members) {
