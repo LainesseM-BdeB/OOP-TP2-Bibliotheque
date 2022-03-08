@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.List;
+
 public class Bibliotheque {
 
     private String nom;
@@ -8,6 +10,9 @@ public class Bibliotheque {
     private String province;
     private String telephone;
     private String courriel;
+    private List<Document> inventaire;
+    private List<Member> membres;
+    private List<Emprunt> emprunts;
 
     public Bibliotheque() {
         setNom(nom);
@@ -19,7 +24,7 @@ public class Bibliotheque {
     }
 
     public String getAdresse() {
-        return adresse;
+        return this.adresse;
     }
 
     public void setAdresse(String adresse) {
