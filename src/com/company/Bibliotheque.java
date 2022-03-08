@@ -1,5 +1,6 @@
 package com.company;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Bibliotheque {
@@ -12,7 +13,7 @@ public class Bibliotheque {
     private String courriel;
     private List<Document> inventaire;
     private List<Member> membres;
-    private List<Emprunt> emprunts;
+    //private List<Emprunt> emprunts;
 
     public Bibliotheque() {
         setNom(nom);
@@ -21,7 +22,40 @@ public class Bibliotheque {
         setProvince(province);
         setTelephone(telephone);
         setCourriel(courriel);
+        setInventaire();
     }
+
+    public List<Document> getInventaire() throws CloneNotSupportedException {
+        List<Document> inventaire = new ArrayList<>();
+        for (Document doc : this.inventaire) {
+            inventaire.add((Document) doc.clone());
+        }
+        return inventaire;
+    }
+
+    private void setInventaire() {
+        this.inventaire = new ArrayList<>();
+    }
+
+    public void addDocument(Document doc) throws CloneNotSupportedException {
+        this.inventaire.add((Document) doc.clone());
+    }
+
+    public List<Member> getMembres() {
+        return membres;
+    }
+
+    public void setMembres(List<Member> membres) {
+        this.membres = membres;
+    }
+
+    //public List<Emprunt> getEmprunts() {
+    //    return emprunts;
+    //}
+
+    //public void setEmprunts(List<Emprunt> emprunts) {
+    //    this.emprunts = emprunts;
+    //}
 
     public String getAdresse() {
         return this.adresse;
@@ -32,7 +66,7 @@ public class Bibliotheque {
     }
 
     public String getVille() {
-        return ville;
+        return this.ville;
     }
 
     public void setVille(String ville) {
@@ -40,7 +74,7 @@ public class Bibliotheque {
     }
 
     public String getProvince() {
-        return province;
+        return this.province;
     }
 
     public void setProvince(String province) {
@@ -48,7 +82,7 @@ public class Bibliotheque {
     }
 
     public String getTelephone() {
-        return telephone;
+        return this.telephone;
     }
 
     public void setTelephone(String telephone) {
@@ -56,7 +90,7 @@ public class Bibliotheque {
     }
 
     public String getCourriel() {
-        return courriel;
+        return this.courriel;
     }
 
     public void setCourriel(String courriel) {

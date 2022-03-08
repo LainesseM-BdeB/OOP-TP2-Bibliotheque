@@ -1,6 +1,6 @@
 package com.company;
 
-public class Document {
+public class Document implements Cloneable{
     private String titre;
 
     public Document(String titre) {
@@ -17,6 +17,10 @@ public class Document {
 
     public void printInfo() {
         System.out.printf("Le titre est:\n%s\n", getTitre());
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 
 }
