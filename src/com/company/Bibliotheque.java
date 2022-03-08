@@ -15,7 +15,7 @@ public class Bibliotheque {
     private List<Member> membres;
     //private List<Emprunt> emprunts;
 
-    public Bibliotheque() {
+    public Bibliotheque(String nom, String adresse, String ville, String province, String telephone, String courriel) {
         setNom(nom);
         setAdresse(adresse);
         setVille(ville);
