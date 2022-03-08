@@ -8,6 +8,16 @@ public class Member {
     private String nom;
     private String prenom;
     private int memNum;
+    private String ID;
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = String.valueOf(memNum+init);
+    }
+
     private char init;
 
 
@@ -41,10 +51,10 @@ public class Member {
 
     public void afficher() {
         System.out.printf(
-                     "Numero: "+memNum+"%n"
-                    +"id#: "+ memNum+init+"%n"
-                    +"nom: "+ nom +"%n"
-                    +"prenom: "+ prenom +"%n");
+
+                    "id#: "+this.ID+"%n"
+                    +"nom: "+this.nom +"%n"
+                    +"prenom: "+this.prenom +"%n");
     }
 
 }
