@@ -13,7 +13,7 @@ public class Bibliotheque {
     private String courriel;
     private List<Document> inventaire;
     private List<Member> membres;
-    //private List<Emprunt> emprunts;
+    private List<Emprunt> emprunts;
 
     public Bibliotheque(String nom, String adresse, String ville, String province, String telephone, String courriel) {
         setNom(nom);
@@ -39,6 +39,21 @@ public class Bibliotheque {
 
     public void addDocument(Document doc) throws CloneNotSupportedException {
         this.inventaire.add((Document) doc.clone());
+    }
+
+    public Recherche getDocument(String ID) {
+        Recherche response = new Recherche();
+        for (Document doc : this.inventaire) {
+            if (doc.getID().equals(ID)) {
+                response.foundDoc(this.inventaire.indexOf(doc));
+                break;
+            }
+        }
+        return response;
+    }
+
+    public void removeDocument(int doc) {
+        this.inventaire.remove(doc);
     }
 
     public List<Member> getMembres() {

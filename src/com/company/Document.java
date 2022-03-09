@@ -2,9 +2,21 @@ package com.company;
 
 public class Document implements Cloneable{
     private String titre;
+    private static int idNum = 1;
+    private String ID;
 
     public Document(String titre) {
         setTitre(titre);
+        setID();
+        idNum++;
+    }
+
+    public void setID() {
+        this.ID = "D" + idNum;
+    }
+
+    public String getID() {
+        return this.ID;
     }
 
     public void setTitre(String titre) {
@@ -16,7 +28,7 @@ public class Document implements Cloneable{
     }
 
     public void printInfo() {
-        System.out.printf("Le titre est:\n%s\n", getTitre());
+        System.out.printf("Le ID est:\n%s\nLe titre est:\n%s\n", getID(), getTitre());
     }
 
     public Object clone() throws CloneNotSupportedException {

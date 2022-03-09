@@ -15,10 +15,28 @@ public class Main {
         bibli.addDocument(new Livre("Java pour les nuls", "Maxime Lainesse"));
         bibli.addDocument(new BD("Java pour les nuls en dessins!", "Maxime Lainesse", "Vincent Poirier"));
 
-        System.out.println(bibli.getInventaire().size());
+
+        System.out.println("###################################################################");
         for (Document doc : bibli.getInventaire()) {
             doc.printInfo();
         }
+        System.out.println("###################################################################");
+
+        Recherche response = bibli.getDocument("D1");
+        if (response.getFound()) {
+            bibli.getInventaire().get(response.getDocument()).printInfo();
+            bibli.removeDocument(response.getDocument());
+        } else {
+            System.out.println("There wasn't any Document with this ID");
+        }
+
+        System.out.println("###################################################################");
+        for (Document doc : bibli.getInventaire()) {
+            doc.printInfo();
+        }
+        System.out.println("###################################################################");
+
+
 
         //ArrayList<Document> inventaire = new ArrayList<>();
         //inventaire.add(new Livre("Java pour les nuls", "Maxime Lainesse"));
@@ -31,15 +49,15 @@ public class Main {
 
         // test de la classe Membre
 
-        Map<String, Member> members = new HashMap<>();
-        Member tempMemb = new Member("César", "Jules");
-        members.put(tempMemb.getMemID(), tempMemb);
-        System.out.println();
-
-        Map<String, Emprunt> emprunts = new HashMap<>();
-        Emprunt tempEmp = new Emprunt("01-01-2022", "16-01-2202","1CÉS","RR");
-        emprunts.put(tempEmp.getEmp(), tempEmp);
-        System.out.println();
+        //Map<String, Member> members = new HashMap<>();
+        //Member tempMemb = new Member("César", "Jules");
+        //members.put(tempMemb.getMemID(), tempMemb);
+        //System.out.println();
+        //
+        //Map<String, Emprunt> emprunts = new HashMap<>();
+        //Emprunt tempEmp = new Emprunt("01-01-2022", "16-01-2202","1CÉS","RR");
+        //emprunts.put(tempEmp.getEmp(), tempEmp);
+        //System.out.println();
 
 
         //for ( Member ls : members) {
