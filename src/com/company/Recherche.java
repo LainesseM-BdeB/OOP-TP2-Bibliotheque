@@ -1,7 +1,5 @@
 package com.company;
 
-import javax.print.Doc;
-
 public class Recherche {
 
     private Boolean found = false;
