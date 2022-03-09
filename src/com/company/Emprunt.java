@@ -1,5 +1,7 @@
 package com.company;
 
+import java.time.LocalDate; // import the LocalDate class
+
 public class Emprunt {
 
     //attributs
@@ -8,24 +10,26 @@ public class Emprunt {
     private String date_In;
     private String memID;
     private String Doc;
-    private String Emp;
+    private boolean extend;
+    private String now;
 
 
 
+    public Emprunt(String pdate_Out, String pdate_In, String pmemID, String pdoc){
 
-    public Emprunt(String date_Out, String date_In, String memID, String doc) {
-        this.getDate_Out();
-        this.getDate_In();
-        this.getMemID();
-        this.getDoc();
-        this.getEmp();
+        this.setDate_Out(pdate_Out);
+        this.setDate_In(pdate_In);
+        this.setMemID(pmemID);
+        this.setDoc(pdoc);
+        this.setExtend(false);
     }
 
     public String getDate_Out() {
         return date_Out;
     }
     public void setDate_Out(String date_Out) {
-        this.date_Out = date_Out;
+
+        this.date_Out=date_Out;
     }
 
     public String getDate_In() {
@@ -49,13 +53,19 @@ public class Emprunt {
         Doc = doc;
     }
 
-    public String getEmp() {
-        return Emp;
+    public boolean isExtend() {
+        return extend;
     }
 
-    public void setEmp(String emp) {
-        Emp = emp;
+    public void setExtend(boolean extend) {
+        this.extend = extend;
     }
+
+    public void Now(String[] args) {
+            LocalDate myObj = LocalDate.now();
+      }
+
+
 }
 
 
