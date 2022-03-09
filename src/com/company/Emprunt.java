@@ -1,8 +1,10 @@
 package com.company;
 
-import java.time.LocalDate; // import the LocalDate class
+import java.time.LocalDate;
 
 public class Emprunt {
+
+    public static LocalDate date=LocalDate.now();
 
     //attributs
 
@@ -11,8 +13,6 @@ public class Emprunt {
     private String memID;
     private String Doc;
     private boolean extend;
-    private String now;
-
 
 
     public Emprunt(String pdate_Out, String pdate_In, String pmemID, String pdoc){
@@ -29,8 +29,7 @@ public class Emprunt {
     }
 
     public void setDate_Out(String date_Out) {
-
-        this.date_Out=date_Out;
+        this.date_Out= String.valueOf(date);
     }
 
     public String getDate_In() {
@@ -38,7 +37,7 @@ public class Emprunt {
     }
 
     public void setDate_In(String date_In) {
-        this.date_In = date_In;
+        this.date_In = String.valueOf(date.plusDays(14));
     }
 
     public String getMemID() {
@@ -65,11 +64,10 @@ public class Emprunt {
         this.extend = extend;
     }
 
-    public void Now(String[] args) {
-            LocalDate myObj = LocalDate.now();
-      }
+    }
 
 
-}
+
+
 
 
