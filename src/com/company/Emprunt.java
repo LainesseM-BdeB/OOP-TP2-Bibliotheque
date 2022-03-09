@@ -27,6 +27,7 @@ public class Emprunt {
     public String getDate_Out() {
         return date_Out;
     }
+
     public void setDate_Out(String date_Out) {
 
         this.date_Out=date_Out;
@@ -35,6 +36,7 @@ public class Emprunt {
     public String getDate_In() {
         return date_In;
     }
+
     public void setDate_In(String date_In) {
         this.date_In = date_In;
     }
@@ -42,6 +44,7 @@ public class Emprunt {
     public String getMemID() {
         return memID;
     }
+
     public void setMemID(String memID) {
         this.memID = memID;
     }
@@ -49,6 +52,7 @@ public class Emprunt {
     public String getDoc() {
         return Doc;
     }
+
     public void setDoc(String doc) {
         Doc = doc;
     }
