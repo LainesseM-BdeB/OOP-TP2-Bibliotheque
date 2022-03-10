@@ -2,21 +2,21 @@ package com.company;
 
 public class Document implements Cloneable{
     private String titre;
-    private static int idNum = 1;
-    private String ID;
+    private static int idDocNum = 1;
+    private String docID;
 
     public Document(String titre) {
         setTitre(titre);
         setID();
-        idNum++;
+        idDocNum++;
     }
 
     public void setID() {
-        this.ID = "D" + idNum;
+        this.docID = "D" + idDocNum;
     }
 
     public String getID() {
-        return this.ID;
+        return this.docID;
     }
 
     public void setTitre(String titre) {

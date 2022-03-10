@@ -1,11 +1,23 @@
 package com.company;
 
 public class Volume extends Document {
-    String auteur;
+    private String auteur;
+    private static int idVolNum = 1;
+    private String volID;
 
     public Volume(String titre, String auteur) {
         super(titre);
         setAuteur(auteur);
+        idVolNum++;
+    }
+
+    public void setID() {
+        super.setID();
+        this.volID = super.getID() + "-V" + idVolNum;
+    }
+
+    public String getID() {
+        return this.volID;
     }
 
     public void setAuteur(String auteur) {
@@ -17,8 +29,7 @@ public class Volume extends Document {
     }
 
     public void printInfo() {
-        super.printInfo();
-        System.out.printf("L'auteur est:\n%s\n", getAuteur());
+        System.out.printf("Le ID est:\n%s\nLe titre est:\n%s\nL'auteur est:\n%s\n", getID(), getTitre(), getAuteur());
     }
 
 }

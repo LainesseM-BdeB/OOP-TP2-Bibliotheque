@@ -30,7 +30,8 @@ public class Main {
 
         bibli.addDocument(new Livre("Java pour les nuls", "Maxime Lainesse"));
         bibli.addDocument(new BD("Java pour les nuls en dessins!", "Maxime Lainesse", "Vincent Poirier"));
-
+        bibli.addDocument(new Journal("Le journal de Baie-Comeau", LocalDate.now()));
+        bibli.addDocument(new OuvrageReference("L'atlas des patates", "Madame Brossard", "Alimentation"));
 
         System.out.println("###################################################################");
         for (Document doc : bibli.getInventaire()) {
@@ -38,7 +39,7 @@ public class Main {
         }
         System.out.println("###################################################################");
 
-        Recherche response = bibli.getDocument("D1");
+        Recherche response = bibli.getDocument("D3-J1");
         if (response.getFound()) {
             bibli.getInventaire().get(response.getDocument()).printInfo();
             bibli.removeDocument(response.getDocument());

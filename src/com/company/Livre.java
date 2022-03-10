@@ -2,9 +2,21 @@ package com.company;
 
 public class Livre extends Volume{
     private boolean estDisponible = true;
+    private static int idLivNum = 1;
+    private String livID;
 
     public Livre(String titre, String auteur) {
         super(titre, auteur);
+        idLivNum++;
+    }
+
+    public void setID() {
+        super.setID();
+        this.livID = super.getID() + "-L" + idLivNum;
+    }
+
+    public String getID() {
+        return this.livID;
     }
 
     public void setDisponible(boolean estDisponible) {
@@ -20,8 +32,7 @@ public class Livre extends Volume{
     }
 
     public void printInfo() {
-        super.printInfo();
-        System.out.printf("Disponibilité:\n%b\n", getDisponible());
+        System.out.printf("Le ID est:\n%s\nLe titre est:\n%s\nL'auteur est:\n%s\nDisponibilité:\n%b\n", getID(), getTitre(), getAuteur(), getDisponible());
     }
 
 }
