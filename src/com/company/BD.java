@@ -37,4 +37,14 @@ public class BD extends Volume {
         System.out.printf("Le dessinateur est:\n%s\n", getDessinateur());
     }
 
+    public String toCsv() {
+        String csvLine;
+        csvLine = this.getClass().getSimpleName();
+        csvLine += ";" + this.getID();
+        csvLine += ";" + this.getTitre();
+        csvLine += ";" + this.getAuteur();
+        csvLine += ";" + this.getDessinateur();
+        return csvLine;
+    }
+
 }

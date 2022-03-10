@@ -14,7 +14,7 @@ public class OuvrageReference extends Volume {
 
     public void setID() {
         super.setID();
-        this.id = super.getID() + "-O" + idOuvNum;
+        this.id = super.getID() + "-R" + idOuvNum;
     }
 
     public String getID() {
@@ -36,6 +36,16 @@ public class OuvrageReference extends Volume {
     public void printInfo() {
         super.printInfo();
         System.out.printf("Sujet:\n%s\n", getSujet());
+    }
+
+    public String toCsv() {
+        String csvLine;
+        csvLine = this.getClass().getSimpleName();
+        csvLine += ";" + this.getID();
+        csvLine += ";" + this.getTitre();
+        csvLine += ";" + this.getAuteur();
+        csvLine += ";" + this.getSujet();
+        return csvLine;
     }
 
 }

@@ -35,4 +35,14 @@ public class Livre extends Volume{
         System.out.printf("Le ID est:\n%s\nLe titre est:\n%s\nL'auteur est:\n%s\nDisponibilité:\n%b\n", getID(), getTitre(), getAuteur(), getDisponible());
     }
 
+    public String toCsv() {
+        String csvLine;
+        csvLine = this.getClass().getSimpleName();
+        csvLine += ";" + this.getID();
+        csvLine += ";" + this.getTitre();
+        csvLine += ";" + this.getAuteur();
+        csvLine += ";" + this.getDisponible();
+        return csvLine;
+    }
+
 }

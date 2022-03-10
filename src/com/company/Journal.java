@@ -31,4 +31,18 @@ public class Journal extends Document{
         this.date = date;
     }
 
+    public void printInfo() {
+        super.printInfo();
+        System.out.printf("Date de parution:\n%s\n", getDate());
+    }
+
+    public String toCsv() {
+        String csvLine;
+        csvLine = this.getClass().getSimpleName();
+        csvLine += ";" + this.getID();
+        csvLine += ";" + this.getTitre();
+        csvLine += ";" + this.getDate();
+        return csvLine;
+    }
+
 }

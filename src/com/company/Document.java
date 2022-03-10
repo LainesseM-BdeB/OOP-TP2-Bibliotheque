@@ -35,4 +35,12 @@ public class Document implements Cloneable{
         return super.clone();
     }
 
+    public String toCsv() {
+        String csvLine;
+        csvLine = this.getClass().getSimpleName();
+        csvLine += ";" + this.getID();
+        csvLine += ";" + this.getTitre();
+        return csvLine;
+    }
+
 }

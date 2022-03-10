@@ -32,4 +32,13 @@ public class Volume extends Document {
         System.out.printf("Le ID est:\n%s\nLe titre est:\n%s\nL'auteur est:\n%s\n", getID(), getTitre(), getAuteur());
     }
 
+    public String toCsv() {
+        String csvLine;
+        csvLine = this.getClass().getSimpleName();
+        csvLine += ";" + this.getID();
+        csvLine += ";" + this.getTitre();
+        csvLine += ";" + this.getAuteur();
+        return csvLine;
+    }
+
 }

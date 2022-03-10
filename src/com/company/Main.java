@@ -1,5 +1,7 @@
 package com.company;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +10,7 @@ public class Main {
 
 
 
-    public static void main(String[] args) throws CloneNotSupportedException {
+    public static void main(String[] args) throws CloneNotSupportedException, IOException {
         //Testing des classes
         LocalDate today = LocalDate.now();
         System.out.println(today);
@@ -26,12 +28,14 @@ public class Main {
             put(7, "Dimanche");
         }};
         System.out.println(semaine.get(today.getDayOfWeek().getValue()));
-        Bibliotheque bibli = new Bibliotheque("BDEB", "123 fake street", "Fakecity", "Fakestate", "555-555-5555", "bdeb@fakemail.com");
 
+        Bibliotheque bibli = new Bibliotheque("BDEB", "123 fake street", "Fakecity", "Fakestate", "555-555-5555", "bdeb@fakemail.com");
+        bibli.loadInventaire();
         bibli.addDocument(new Livre("Java pour les nuls", "Maxime Lainesse"));
         bibli.addDocument(new BD("Java pour les nuls en dessins!", "Maxime Lainesse", "Vincent Poirier"));
         bibli.addDocument(new Journal("Le journal de Baie-Comeau", LocalDate.now()));
         bibli.addDocument(new OuvrageReference("L'atlas des patates", "Madame Brossard", "Alimentation"));
+        bibli.unloadInventaire();
 
         System.out.println("###################################################################");
         for (Document doc : bibli.getInventaire()) {

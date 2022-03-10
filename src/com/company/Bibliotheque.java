@@ -1,5 +1,6 @@
 package com.company;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +55,28 @@ public class Bibliotheque {
 
     public void removeDocument(int doc) {
         this.inventaire.remove(doc);
+    }
+
+    public void loadInventaire() throws FileNotFoundException {
+        File file = new File("C:\\Users\\lainessem\\IdeaProjects\\OOP-TP2-Bibliotheque\\resources\\inventaire.csv");
+        FileReader fread = new FileReader(file);
+        BufferedReader bfread = new BufferedReader(fread);
+        for (String line : bfread.lines().toList()) {
+            System.out.println(line);
+        }
+    }
+
+    public void unloadInventaire() throws IOException {
+        File file = new File("C:\\Users\\lainessem\\IdeaProjects\\OOP-TP2-Bibliotheque\\resources\\inventaire.csv");
+        FileWriter fwrite = new FileWriter(file);
+        BufferedWriter bfwrite = new BufferedWriter(fwrite);
+        for (Document doc : this.inventaire) {
+            String csvLine = doc.toCsv();
+            bfwrite.write(csvLine);
+            bfwrite.newLine();
+        }
+        bfwrite.close();
+        fwrite.close();
     }
 
     public List<Member> getMembres() {
