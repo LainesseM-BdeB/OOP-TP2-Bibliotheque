@@ -11,6 +11,12 @@ public class Main {
 
 
     public static void main(String[] args) throws CloneNotSupportedException, IOException {
+        //TEST POSTGRESQL
+        //Recherche pg = new Recherche();
+        //pg.testPostgresql();
+        //FIN TEST POSTGRESQL
+
+
         //Testing des classes
         LocalDate today = LocalDate.now();
         System.out.println(today);

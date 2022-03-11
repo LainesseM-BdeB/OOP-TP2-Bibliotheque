@@ -58,8 +58,8 @@ public class Bibliotheque {
     }
 
     public void loadInventaire() throws FileNotFoundException {
-        File file = new File("C:\\Users\\lainessem\\IdeaProjects\\OOP-TP2-Bibliotheque\\resources\\inventaire.csv");
-        FileReader fread = new FileReader(file);
+        File file = new File("resources\\inventaire.csv");
+        FileReader fread = new FileReader(file.getAbsolutePath());
         BufferedReader bfread = new BufferedReader(fread);
         for (String line : bfread.lines().toList()) {
             System.out.println(line);
@@ -67,8 +67,8 @@ public class Bibliotheque {
     }
 
     public void unloadInventaire() throws IOException {
-        File file = new File("C:\\Users\\lainessem\\IdeaProjects\\OOP-TP2-Bibliotheque\\resources\\inventaire.csv");
-        FileWriter fwrite = new FileWriter(file);
+        File file = new File("resources\\inventaire.csv");
+        FileWriter fwrite = new FileWriter(file.getAbsolutePath());
         BufferedWriter bfwrite = new BufferedWriter(fwrite);
         for (Document doc : this.inventaire) {
             String csvLine = doc.toCsv();
