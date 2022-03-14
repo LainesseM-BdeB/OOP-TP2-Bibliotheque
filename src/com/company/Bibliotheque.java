@@ -13,7 +13,7 @@ public class Bibliotheque {
     private String telephone;
     private String courriel;
     private List<Document> inventaire;
-    private List<Member> membres;
+    private List<Member> bottin;
     private List<Emprunt> emprunts;
 
     public Bibliotheque(String nom, String adresse, String ville, String province, String telephone, String courriel) {
@@ -24,6 +24,7 @@ public class Bibliotheque {
         setTelephone(telephone);
         setCourriel(courriel);
         setInventaire();
+        setMembres();
     }
 
     public List<Document> getInventaire() throws CloneNotSupportedException {
@@ -34,9 +35,7 @@ public class Bibliotheque {
         return inventaire;
     }
 
-    private void setInventaire() {
-        this.inventaire = new ArrayList<>();
-    }
+    private void setInventaire() {this.inventaire = new ArrayList<>();}
 
     public void addDocument(Document doc) throws CloneNotSupportedException {
         this.inventaire.add((Document) doc.clone());
@@ -79,13 +78,57 @@ public class Bibliotheque {
         fwrite.close();
     }
 
-    public List<Member> getMembres() {
-        return membres;
+    public List<Member> getMembres() throws CloneNotSupportedException {
+        List<Member> Membres = new ArrayList<>();
+        for (Member mem : this.bottin) {
+            bottin.add((Member) mem.clone());
+        }
+        return bottin;
     }
 
-    public void setMembres(List<Member> membres) {
-        this.membres = membres;
+    private void setMembres() {
+        this.bottin = new ArrayList<>();
     }
+
+    public void addMember(Member mem) throws CloneNotSupportedException {
+        this.bottin.add((Member) mem.clone());
+    }
+    public Recherche getMembres(String ID) {
+        Recherche response = new Recherche();
+        for (Member mem : this.bottin) {
+            if (mem.getID().equals(ID)) {
+                response.foundMember(this.bottin.indexOf(mem));
+                break;
+            }
+        }
+        return response;
+    }
+    public void removeMembres(int mem) {
+        this.bottin.remove(mem);
+    }
+
+    public void loadBottin() throws FileNotFoundException {
+        File file = new File("resources\\membres.csv");
+        FileReader fread = new FileReader(file.getAbsolutePath());
+        BufferedReader bfread = new BufferedReader(fread);
+        for (String line : bfread.lines().toList()) {
+            System.out.println(line);
+        }
+    }
+
+    public void unloadBottin() throws IOException {
+        File file = new File("resources\\members.csv");
+        FileWriter fwrite = new FileWriter(file.getAbsolutePath());
+        BufferedWriter bfwrite = new BufferedWriter(fwrite);
+        for (Member mem : this.bottin) {
+            String csvLine = mem.toCsv();
+            bfwrite.write(csvLine);
+            bfwrite.newLine();
+        }
+        bfwrite.close();
+        fwrite.close();
+    }
+
 
     //public List<Emprunt> getEmprunts() {
     //    return emprunts;

@@ -1,7 +1,7 @@
 package com.company;
 
 
-public class Member {
+public class Member implements Cloneable {
 
     public static int num = 1;
     //attributs
@@ -49,6 +49,9 @@ public class Member {
        this.init = this.nom.charAt(0);
    }
 
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
     public void afficher() {
         System.out.printf(
 
@@ -57,6 +60,14 @@ public class Member {
                     +"prenom: "+this.prenom +"%n");
     }
 
+    public String toCsv() {
+        String csvLine;
+        csvLine = this.getClass().getSimpleName();
+        csvLine += ";" + this.getID();
+        csvLine += ";" + this.getNom();
+        csvLine += ";" + this.getPrenom();
+        return csvLine;
+    }
 }
 
 

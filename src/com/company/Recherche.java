@@ -1,13 +1,12 @@
 package com.company;
 
-import javax.sql.RowSet;
 import java.sql.*;
 
 public class Recherche {
 
     private Boolean found = false;
     private int document;
-    private Member member;
+    private int member;
     private Emprunt emprunt;
 
     public Recherche() {}
@@ -17,7 +16,7 @@ public class Recherche {
         this.document = doc;
     }
 
-    public void foundMember(Member mem) {
+    public void foundMember(int mem) {
         this.found = true;
         this.member = mem;
     }
