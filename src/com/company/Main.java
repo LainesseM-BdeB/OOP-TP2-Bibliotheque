@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Main {
 
@@ -47,6 +48,20 @@ public class Main {
         bibli.addDocument(new BD("Tintin et le point-virgule manquant", "Hergé", "Hergé"));
 
         bibli.showInventaire();
+
+        boolean good = false;
+        do {
+            Scanner inputU = new Scanner(System.in);
+            System.out.println("Choisissez un des livres:");
+            int i = inputU.nextInt();
+            int max = bibli.getInventaire().size();
+            if (i > max || i < 1) {
+                System.out.println("Le chiffre entré n'est pas valide.");
+            } else {
+                bibli.getInventaire().get(i - 1).printInfo();
+                good = true;
+            }
+        } while (!good);
 
         bibli.unloadInventaire();
 
