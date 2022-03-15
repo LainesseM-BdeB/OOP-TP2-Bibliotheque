@@ -10,23 +10,23 @@ public class Member implements Cloneable {
     private int memNum;
     private String ID;
 
-    public String getID() {
-        return ID;
-    }
 
-    public void setID(String ID) {
-        this.ID = String.valueOf(memNum+init);
-    }
-
-    private char init;
+    private String init;
 
 
     public Member(String p_nom, String p_prenom) {
         this.setNom(p_nom);
         this.setPrenom(p_prenom);
         this.setInit();
+        this.setID();
         this.memNum = num;
         num++;
+    }
+    public void setID() {
+        this.ID = init+memNum;
+    }
+    public String getID() {
+        return this.ID;
     }
 
     public String getNom() {
@@ -46,7 +46,7 @@ public class Member implements Cloneable {
     }
 
     public void setInit(){
-       this.init = this.nom.charAt(0);
+       this.init = nom.substring(0,3);
    }
 
     public Object clone() throws CloneNotSupportedException {
@@ -59,7 +59,9 @@ public class Member implements Cloneable {
                     +"nom: "+this.nom +"%n"
                     +"prenom: "+this.prenom +"%n");
     }
-
+    public void printMem() {
+        System.out.printf(getNom(), getPrenom());
+    }
     public String toCsv() {
         String csvLine;
         csvLine = this.getClass().getSimpleName();

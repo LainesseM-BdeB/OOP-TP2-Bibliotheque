@@ -63,6 +63,13 @@ public class Main {
         }
         System.out.println("###################################################################");
 
+        Bibliotheque Memb =new Bibliotheque("BDEB", "123 fake street", "Fakecity", "Fakestate", "555-555-5555", "bdeb@fakemail.com");
+        Memb.loadBottin();
+        Memb.addMember(new Member("Trump","Donald"));
+        Memb.addMember(new Member("Case","Justin"));
+        Memb.unloadBottin();
+        
+        System.out.println();
 
 
         //ArrayList<Document> inventaire = new ArrayList<>();

@@ -117,7 +117,7 @@ public class Bibliotheque {
     }
 
     public void unloadBottin() throws IOException {
-        File file = new File("resources\\members.csv");
+        File file = new File("resources\\membres.csv");
         FileWriter fwrite = new FileWriter(file.getAbsolutePath());
         BufferedWriter bfwrite = new BufferedWriter(fwrite);
         for (Member mem : this.bottin) {
