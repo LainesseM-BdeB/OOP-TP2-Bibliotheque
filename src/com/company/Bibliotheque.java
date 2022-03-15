@@ -35,6 +35,26 @@ public class Bibliotheque {
         return inventaire;
     }
 
+    public void showInventaire() throws Exception {
+        List<Document> inventaire = getInventaire();
+        List<String> options = new ArrayList<>();
+        Menu menu = new Menu("Inventaire", this.getNom(), "Inventaire de la bibliothèque", options);
+        options = new ArrayList<>();
+        int i = 1;
+        for (Document doc : inventaire) {
+            String opt = i + "- " + doc.getID() + ": " + doc.getTitre();
+            if (opt.length() > menu.widthMaxTextM) {
+                options.add(opt.substring(0, menu.widthMaxTextM));
+            } else {
+                options.add(opt);
+            }
+            i++;
+        }
+        menu.setOptionsM(options);
+        menu.genMenu();
+        menu.printMenu();
+    }
+
     private void setInventaire() {this.inventaire = new ArrayList<>();}
 
     public void addDocument(Document doc) throws CloneNotSupportedException {

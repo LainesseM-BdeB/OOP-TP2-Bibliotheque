@@ -10,7 +10,7 @@ public class Main {
 
 
 
-    public static void main(String[] args) throws CloneNotSupportedException, IOException {
+    public static void main(String[] args) throws Exception {
         //TEST POSTGRESQL
         //Recherche pg = new Recherche();
         //pg.testPostgresql();
@@ -41,6 +41,13 @@ public class Main {
         bibli.addDocument(new BD("Java pour les nuls en dessins!", "Maxime Lainesse", "Vincent Poirier"));
         bibli.addDocument(new Journal("Le journal de Baie-Comeau", LocalDate.now()));
         bibli.addDocument(new OuvrageReference("L'atlas des patates", "Madame Brossard", "Alimentation"));
+
+        bibli.showInventaire();
+
+        bibli.addDocument(new BD("Tintin et le point-virgule manquant", "Hergé", "Hergé"));
+
+        bibli.showInventaire();
+
         bibli.unloadInventaire();
 
         System.out.println("###################################################################");
