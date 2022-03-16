@@ -229,7 +229,7 @@ public class Bibliotheque {
                 case "2" -> makeBD();
                 case "3" -> makeJournal();
                 case "4" -> makeReference();
-                default -> System.out.println("Une erreur c'est produite");
+                default -> {System.out.println("Une erreur c'est produite"); wait(3000);}
             }
         } while (!exit);
     }
@@ -245,7 +245,7 @@ public class Bibliotheque {
         this.addDocument(new OuvrageReference(input.get(0), input.get(1), input.get(2)));
     }
 
-    private void makeJournal() throws CloneNotSupportedException {
+    private void makeJournal() throws CloneNotSupportedException, InterruptedException {
         Scanner inputU = new Scanner(System.in);
         List<String> input = new ArrayList<>();
         String[] infoArr = {"le titre", "la date de parution(aaaa-mm-jj)"};
@@ -257,6 +257,7 @@ public class Bibliotheque {
             this.addDocument(new Journal(input.get(0), LocalDate.parse(input.get(1))));
         } catch (DateTimeParseException e) {
             System.out.println("Le format de la date était incorrect.");
+            Thread.sleep(3000);
         }
     }
 

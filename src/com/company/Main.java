@@ -36,10 +36,9 @@ public class Main {
                 case "2" -> invMenu(bibli);
                 case "3" -> System.out.println("Membre n'est pas encore fonctionel");
                 case "4" -> System.out.println("Info n'est pas encore fonctionel");
-                default -> System.out.println("Une erreur c'est produite");
+                default -> {System.out.println("Une erreur c'est produite"); Thread.sleep(3000);}
             }
         } while (!exit);
-
         //Live code for menu DO NOT DELETE OR CHANGE ^^^^^
 
 
@@ -179,7 +178,7 @@ public class Main {
                     case 1 -> bibli.showInventaire();
                     case 2 -> bibli.createDocument();
                     case 3 -> bibli.destroyDocument();
-                    default -> System.out.println("Une erreur c'est produite");
+                    default -> {System.out.println("Une erreur c'est produite"); Thread.sleep(3000);}
                 }
             }
         } while (!exit);
