@@ -34,7 +34,7 @@ public class Main {
                 case "q" -> exit = true;
                 case "1" -> System.out.println("Emprunt n'est pas encore fonctionel");
                 case "2" -> invMenu(bibli);
-                case "3" -> System.out.println("Membre n'est pas encore fonctionel");
+                case "3" -> memMenu(bibli);
                 case "4" -> System.out.println("Info n'est pas encore fonctionel");
                 default -> {System.out.println("Une erreur c'est produite"); Thread.sleep(3000);}
             }
@@ -181,6 +181,31 @@ public class Main {
                     default -> {System.out.println("Une erreur c'est produite"); Thread.sleep(3000);}
                 }
             }
+        } while (!exit);
+    }
+    private static void memMenu(Bibliotheque bibli) throws Exception {
+        //Generating registre menu
+        List<String> memOpt = new ArrayList<>();
+        Scanner inputU = new Scanner(System.in);
+        String input;
+        boolean exit = false;
+        memOpt.add("Afficher le registre");
+        memOpt.add("Ajouter un adhérent");
+        memOpt.add("Retirer un adhérent");
+        Menu memM = new Menu("inventaire", bibli.getNom(), "Gestion du Registre", memOpt);
+        memM.genMenu();
+        do {
+            memM.printMenu();
+            System.out.println("Choisissez une des options:");
+            input = inputU.nextLine().toLowerCase().strip();
+            switch (input) {
+                case "q"-> exit = true;
+                case "1"-> bibli.showBottin();
+                case "2"-> bibli.createDocument();
+                case "3"-> bibli.destroyDocument();
+                default -> System.out.println("Une erreur c'est produite");
+                }
+
         } while (!exit);
     }
 }

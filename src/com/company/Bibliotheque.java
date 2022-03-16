@@ -28,7 +28,8 @@ public class Bibliotheque {
         setTelephone(telephone);
         setCourriel(courriel);
         setInventaire();
-        setMembres();
+        setBottin();
+
     }
 
     public List<Document> getInventaire() throws CloneNotSupportedException {
@@ -43,7 +44,6 @@ public class Bibliotheque {
         List<Document> inventaire = getInventaire();
         List<String> options = new ArrayList<>();
         Menu menu = new Menu("Inventaire", this.getNom(), "Inventaire de la bibliothèque", options);
-        options = new ArrayList<>();
         for (Document doc : inventaire) {
             String opt = doc.getID() + ": " + doc.getTitre();
             if (opt.length() > menu.widthMaxTextM) {
@@ -99,23 +99,40 @@ public class Bibliotheque {
         bfwrite.close();
         fwrite.close();
     }
+//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-    public List<Member> getMembres() throws CloneNotSupportedException {
-        List<Member> Membres = new ArrayList<>();
+    public List<Member> getBottin() throws CloneNotSupportedException {
+        List<Member> bottin = new ArrayList<>();
         for (Member mem : this.bottin) {
             bottin.add((Member) mem.clone());
         }
         return bottin;
     }
+    public void showBottin() throws Exception {
+        List<Member> bottin = getBottin();
+        List<String> options = new ArrayList<>();
+        Menu menu = new Menu("Bottin", this.getNom(), "Registre de la bibliothèque", options);
+        for (Member mem : bottin) {
+            String opt = mem.getID() + ": " + mem.getNom() + ": " + mem.getPrenom();
+            if (opt.length() > menu.widthMaxTextM) {
+                options.add(opt.substring(0, menu.widthMaxTextM));
+            } else {
+                options.add(opt);
+            }
+        }
+        menu.setOptionsM(options);
+        menu.genMenu();
+        menu.printMenu();
+    }
 
-    private void setMembres() {
+    private void setBottin() {
         this.bottin = new ArrayList<>();
     }
 
     public void addMember(Member mem) throws CloneNotSupportedException {
         this.bottin.add((Member) mem.clone());
     }
-    public Recherche getMembres(String ID) {
+    public Recherche getMember(String ID) {
         Recherche response = new Recherche();
         for (Member mem : this.bottin) {
             if (mem.getID().equals(ID)) {
