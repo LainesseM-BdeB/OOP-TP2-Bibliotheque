@@ -3,6 +3,7 @@ package com.company;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Bibliotheque {
 
@@ -206,4 +207,27 @@ public class Bibliotheque {
         this.nom = nom;
     }
 
+    public void createDocument() throws Exception {
+        Scanner inputU = new Scanner(System.in);
+        String input;
+        boolean exit = false;
+        List<String> optM = new ArrayList<>();
+        optM.add("Livre");
+        optM.add("BD");
+        optM.add("Journal");
+        optM.add("Ouvrage de référence");
+        Menu docM = new Menu("document", "Création de document", "Voici les types de documents disponible", optM);
+        do {
+            System.out.println("Quel type de document voulez vous rajouter?");
+            input = inputU.nextLine();
+            if (input.equals("q")) {
+                exit = true;
+            } else {
+                //Make a switch case!
+            }
+        } while (!exit);
+    }
+
+    public void destroyDocument() {
+    }
 }
