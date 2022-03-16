@@ -3,6 +3,7 @@ package com.company;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Bibliotheque {
@@ -215,15 +216,40 @@ public class Bibliotheque {
         optM.add("Journal");
         optM.add("Ouvrage de référence");
         Menu docM = new Menu("document", "Création de document", "Voici les types de documents disponible", optM);
+        docM.genMenu();
         do {
+            docM.printMenu();
             System.out.println("Quel type de document voulez vous rajouter?");
-            input = inputU.nextLine();
-            if (input.equals("q")) {
-                exit = true;
-            } else {
-                //Make a switch case!
+            input = inputU.nextLine().toLowerCase().strip();
+            switch (input) {
+                case "q" -> exit = true;
+                case "1" -> makeLivre();
+                case "2" -> makeBD();
+                case "3" -> makeJournal();
+                case "4" -> makeReference();
+                default -> System.out.println("Une erreur c'est produite");
             }
         } while (!exit);
+    }
+
+    private void makeReference() {
+    }
+
+    private void makeJournal() {
+    }
+
+    private void makeBD() {
+    }
+
+    private void makeLivre() throws CloneNotSupportedException {
+        Scanner inputU = new Scanner(System.in);
+        List<String> input = new ArrayList<>();
+        String[] infoArr = {"le titre", "l'auteur"};
+        for (String info : infoArr) {
+            System.out.printf("Entrez %s du livre:\n", info);
+            input.add(inputU.nextLine().strip());
+        }
+        this.addDocument(new Livre(input.get(0), input.get(1)));
     }
 
     public void destroyDocument() throws Exception {

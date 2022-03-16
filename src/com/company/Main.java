@@ -30,16 +30,13 @@ public class Main {
             mainM.printMenu();
             System.out.println("Choisissez une des options:");
             input = inputU.nextLine().toLowerCase().strip();
-            if (input.equals("q")) {
-                exit = true;
-            } else {
-                switch (Integer.parseInt(input)) {
-                    case 1 -> System.out.println("Emprunt n'est pas encore fonctionel");
-                    case 2 -> invMenu(bibli);
-                    case 3 -> System.out.println("Membre n'est pas encore fonctionel");
-                    case 4 -> System.out.println("Info n'est pas encore fonctionel");
-                    default -> System.out.println("Une erreur c'est produite");
-                }
+            switch (input) {
+                case "q" -> exit = true;
+                case "1" -> System.out.println("Emprunt n'est pas encore fonctionel");
+                case "2" -> invMenu(bibli);
+                case "3" -> System.out.println("Membre n'est pas encore fonctionel");
+                case "4" -> System.out.println("Info n'est pas encore fonctionel");
+                default -> System.out.println("Une erreur c'est produite");
             }
         } while (!exit);
 
