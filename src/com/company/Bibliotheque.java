@@ -1,6 +1,8 @@
 package com.company;
 
 import java.io.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -232,13 +234,41 @@ public class Bibliotheque {
         } while (!exit);
     }
 
-    private void makeReference() {
+    private void makeReference() throws CloneNotSupportedException {
+        Scanner inputU = new Scanner(System.in);
+        List<String> input = new ArrayList<>();
+        String[] infoArr = {"le titre", "l'auteur", "le sujet"};
+        for (String info : infoArr) {
+            System.out.printf("Entrez %s de l'ouvrage de référence:\n", info);
+            input.add(inputU.nextLine().strip());
+        }
+        this.addDocument(new OuvrageReference(input.get(0), input.get(1), input.get(2)));
     }
 
-    private void makeJournal() {
+    private void makeJournal() throws CloneNotSupportedException {
+        Scanner inputU = new Scanner(System.in);
+        List<String> input = new ArrayList<>();
+        String[] infoArr = {"le titre", "la date de parution(aaaa-mm-jj)"};
+        for (String info : infoArr) {
+            System.out.printf("Entrez %s du journal:\n", info);
+            input.add(inputU.nextLine().strip());
+        }
+        try {
+            this.addDocument(new Journal(input.get(0), LocalDate.parse(input.get(1))));
+        } catch (DateTimeParseException e) {
+            System.out.println("Le format de la date était incorrect.");
+        }
     }
 
-    private void makeBD() {
+    private void makeBD() throws CloneNotSupportedException {
+        Scanner inputU = new Scanner(System.in);
+        List<String> input = new ArrayList<>();
+        String[] infoArr = {"le titre", "l'auteur", "le dessinateur"};
+        for (String info : infoArr) {
+            System.out.printf("Entrez %s de la BD:\n", info);
+            input.add(inputU.nextLine().strip());
+        }
+        this.addDocument(new BD(input.get(0), input.get(1), input.get(2)));
     }
 
     private void makeLivre() throws CloneNotSupportedException {
