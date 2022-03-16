@@ -41,15 +41,13 @@ public class Bibliotheque {
         List<String> options = new ArrayList<>();
         Menu menu = new Menu("Inventaire", this.getNom(), "Inventaire de la bibliothèque", options);
         options = new ArrayList<>();
-        int i = 1;
         for (Document doc : inventaire) {
-            String opt = i + "- " + doc.getID() + ": " + doc.getTitre();
+            String opt = doc.getID() + ": " + doc.getTitre();
             if (opt.length() > menu.widthMaxTextM) {
                 options.add(opt.substring(0, menu.widthMaxTextM));
             } else {
                 options.add(opt);
             }
-            i++;
         }
         menu.setOptionsM(options);
         menu.genMenu();
@@ -228,6 +226,10 @@ public class Bibliotheque {
         } while (!exit);
     }
 
-    public void destroyDocument() {
+    public void destroyDocument() throws Exception {
+        Scanner input = new Scanner(System.in);
+        showInventaire();
+        System.out.println("Quel document voulez-vous supprimer?:");
+        removeDocument(input.nextInt() - 1);
     }
 }

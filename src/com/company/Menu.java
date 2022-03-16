@@ -54,7 +54,7 @@ public class Menu {
             }
         }
         optionsM = options;
-        optionsM.add("Q- Quitter");
+        optionsM.add("Quitter");
         //Creates the skip line and border line used in the menu creation
         for (int i = 0; i < widthM; i++) {
             if (i >= 1 && i < widthM - 1) {
@@ -88,7 +88,7 @@ public class Menu {
 
     public void setOptionsM(List<String> options) {
         this.optionsM = options;
-        this.optionsM.add("Q- Quitter");
+        this.optionsM.add("Quitter");
         this.optionsLength = optionsM.size();
     }
 
@@ -119,6 +119,7 @@ public class Menu {
      */
     private String[] genOptions() {
         int optionBodyLength = optionsLength * 2 + 3;
+        int optNum = 1;
         String[] optionsBody = new String[optionBodyLength];
         for (int i = 0; i < optionBodyLength; i++) {
             if (i == 0 | i == optionBodyLength - 1) {
@@ -127,8 +128,13 @@ public class Menu {
                 optionsBody[i] = skipLine;
             } else {
                 for (String opt : optionsM) {
-                    optionsBody[i] = genTextLine(opt, false);
+                    if (opt.equals("Quitter")) {
+                        optionsBody[i] = genTextLine("Q- " + opt, false);
+                    } else {
+                        optionsBody[i] = genTextLine(optNum + "- " + opt, false);
+                    }
                     i++;
+                    optNum++;
                     optionsBody[i] = skipLine;
                     i++;
                 }
