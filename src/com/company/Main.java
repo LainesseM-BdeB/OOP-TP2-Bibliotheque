@@ -30,6 +30,7 @@ public class Main {
             mainM.printMenu();
             System.out.println("Choisissez une des options:");
             input = inputU.nextLine().toLowerCase().strip();
+            //System.out.println(System.lineSeparator().repeat(5));
             switch (input) {
                 case "q" -> exit = true;
                 case "1" -> System.out.println("Emprunt n'est pas encore fonctionel");

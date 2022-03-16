@@ -43,7 +43,11 @@ public class Bibliotheque {
     public void showInventaire() throws Exception {
         List<Document> inventaire = getInventaire();
         List<String> options = new ArrayList<>();
+        Scanner inputU = new Scanner(System.in);
+        String input;
+        boolean exit = false;
         Menu menu = new Menu("Inventaire", this.getNom(), "Inventaire de la bibliothèque", options);
+        options = new ArrayList<>();
         for (Document doc : inventaire) {
             String opt = doc.getID() + ": " + doc.getTitre();
             if (opt.length() > menu.widthMaxTextM) {
@@ -54,7 +58,19 @@ public class Bibliotheque {
         }
         menu.setOptionsM(options);
         menu.genMenu();
-        menu.printMenu();
+        do {
+            menu.printMenu();
+            System.out.println("Pour quel document voulez-vous les détails?:");
+            input = inputU.nextLine().toLowerCase().strip();
+            if (input.equals("q")) {
+                exit = true;
+            } else if (Integer.parseInt(input) > 0 || Integer.parseInt(input) < this.inventaire.size()){
+                    this.inventaire.get(Integer.parseInt(input) - 1).printInfo();
+                }
+            else {
+                System.out.println("Une erreur c'est produite");
+            }
+        } while (!exit);
     }
 
     private void setInventaire() {this.inventaire = new ArrayList<>();}
