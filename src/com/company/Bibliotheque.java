@@ -158,9 +158,6 @@ public class Bibliotheque {
         }
         return response;
     }
-    public void removeMembres(int mem) {
-        this.bottin.remove(mem);
-    }
 
     public void loadBottin() throws FileNotFoundException {
         File file = new File("resources\\membres.csv");
@@ -257,11 +254,12 @@ public class Bibliotheque {
             System.out.println("Quel type de document voulez vous rajouter?");
             input = inputU.nextLine().toLowerCase().strip();
             switch (input) {
-                case "q" -> exit = true;
+
                 case "1" -> makeLivre();
                 case "2" -> makeBD();
                 case "3" -> makeJournal();
                 case "4" -> makeReference();
+                case "q" -> exit = true;
                 default -> {System.out.println("Une erreur c'est produite"); wait(3000);}
             }
         } while (!exit);
@@ -321,5 +319,24 @@ public class Bibliotheque {
         showInventaire();
         System.out.println("Quel document voulez-vous supprimer?:");
         removeDocument(input.nextInt() - 1);
+    }
+    public void makeMembre() throws CloneNotSupportedException {
+        Scanner inputU = new Scanner(System.in);
+        List<String> input = new ArrayList<>();
+        String[] infoArr = {"le Nom", "le Prenom"};
+        for (String info : infoArr) {
+            System.out.printf("Entrez %s de l'adhérent:\n", info);
+            input.add(inputU.nextLine().strip());
+        }
+        this.addMember(new Member(input.get(0), input.get(1)));
+    }
+    public void removeMember(int mem) {
+        this.bottin.remove(mem);
+    }
+    public void destroyMember() throws Exception {
+        Scanner input = new Scanner(System.in);
+        showBottin();
+        System.out.println("Quel adhérent voulez-vous supprimer?:");
+        removeMember(input.nextInt() - 1);
     }
 }

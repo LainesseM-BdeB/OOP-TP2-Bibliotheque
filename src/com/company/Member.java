@@ -18,8 +18,8 @@ public class Member implements Cloneable {
         this.setNom(p_nom);
         this.setPrenom(p_prenom);
         this.setInit();
-        this.setID();
         this.memNum = num;
+        this.setID();
         num++;
     }
     public void setID() {

@@ -15,6 +15,11 @@ public class Main {
         bibli.addDocument(new BD("Java pour les nuls en dessins!", "Maxime Lainesse", "Vincent Poirier"));
         bibli.addDocument(new Journal("Le journal de Baie-Comeau", LocalDate.now()));
         bibli.addDocument(new OuvrageReference("L'atlas des patates", "Madame Brossard", "Alimentation"));
+        bibli.addMember(new Member("Trump","Donald"));
+        bibli.addMember(new Member("Case","Justin"));
+        bibli.addMember(new Member("Croteau","Marcel"));
+        bibli.addMember(new Member("Tremblay","Sylvie"));
+
         //Generating main menu
         List<String> mainOpt = new ArrayList<>();
         mainOpt.add("Emprunt");
@@ -115,13 +120,12 @@ public class Main {
         //    doc.printInfo();
         //}
         //System.out.println("###################################################################");
-        //
-        //Bibliotheque Memb =new Bibliotheque("BDEB", "123 fake street", "Fakecity", "Fakestate", "555-555-5555", "bdeb@fakemail.com");
-        //Memb.loadBottin();
-        //Memb.addMember(new Member("Trump","Donald"));
-        //Memb.addMember(new Member("Case","Justin"));
-        //Memb.unloadBottin();
-        //
+
+
+
+
+
+         //
         //System.out.println();
         //
         //
@@ -193,20 +197,26 @@ public class Main {
         memOpt.add("Afficher le registre");
         memOpt.add("Ajouter un adhérent");
         memOpt.add("Retirer un adhérent");
-        Menu memM = new Menu("inventaire", bibli.getNom(), "Gestion du Registre", memOpt);
+        Menu memM = new Menu("bottin", bibli.getNom(), "Gestion du Registre", memOpt);
         memM.genMenu();
         do {
             memM.printMenu();
             System.out.println("Choisissez une des options:");
             input = inputU.nextLine().toLowerCase().strip();
-            switch (input) {
-                case "q"-> exit = true;
-                case "1"-> bibli.showBottin();
-                case "2"-> bibli.createDocument();
-                case "3"-> bibli.destroyDocument();
-                default -> System.out.println("Une erreur c'est produite");
+            if (input.equals("q")) {
+                exit = true;
+            } else {
+                switch (Integer.parseInt(input)) {
+                    case 1 -> bibli.showBottin();
+                    case 2 -> bibli.makeMembre();
+                    case 3 -> bibli.destroyMember();
+                    default -> {
+                        System.out.println("Une erreur c'est produite");
+                        Thread.sleep(3000);
+                    }
                 }
-
+            }
         } while (!exit);
     }
 }
+
