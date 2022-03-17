@@ -176,7 +176,7 @@ public class Main {
                 exit = true;
             } else {
                 switch (Integer.parseInt(input)) {
-                    case 1 -> bibli.showInventaire();
+                    case 1 -> bibli.showInventaire(true);
                     case 2 -> bibli.createDocument();
                     case 3 -> bibli.destroyDocument();
                     default -> {System.out.println("Une erreur c'est produite"); Thread.sleep(3000);}
