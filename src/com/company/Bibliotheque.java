@@ -131,6 +131,7 @@ public class Bibliotheque {
         List<Member> bottin = getBottin();
         List<String> options = new ArrayList<>();
         Menu menu = new Menu("Bottin", this.getNom(), "Registre de la bibliothèque", options);
+        options = new ArrayList<>();
         for (Member mem : bottin) {
             String opt = mem.getID() + ": " + mem.getNom() + ": " + mem.getPrenom();
             if (opt.length() > menu.widthMaxTextM) {
