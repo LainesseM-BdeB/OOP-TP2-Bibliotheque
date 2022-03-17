@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class Bibliotheque {
@@ -40,7 +39,7 @@ public class Bibliotheque {
         return inventaire;
     }
 
-    public void showInventaire() throws Exception {
+    public void showInventaire(boolean isInteractive) throws Exception {
         List<Document> inventaire = getInventaire();
         List<String> options = new ArrayList<>();
         Scanner inputU = new Scanner(System.in);
@@ -58,19 +57,23 @@ public class Bibliotheque {
         }
         menu.setOptionsM(options);
         menu.genMenu();
-        do {
-            menu.printMenu();
-            System.out.println("Pour quel document voulez-vous les détails?:");
-            input = inputU.nextLine().toLowerCase().strip();
-            if (input.equals("q")) {
-                exit = true;
-            } else if (Integer.parseInt(input) > 0 || Integer.parseInt(input) < this.inventaire.size()){
+        if (isInteractive) {
+            do {
+                menu.printMenu();
+                System.out.println("Pour quel document voulez-vous les détails?:");
+                input = inputU.nextLine().toLowerCase().strip();
+                if (input.equals("q")) {
+                    exit = true;
+                } else if (Integer.parseInt(input) > 0 || Integer.parseInt(input) < this.inventaire.size()) {
                     this.inventaire.get(Integer.parseInt(input) - 1).printInfo();
+                    Thread.sleep(3000);
+                } else {
+                    System.out.println("Une erreur c'est produite");
                 }
-            else {
-                System.out.println("Une erreur c'est produite");
-            }
-        } while (!exit);
+            } while (!exit);
+        } else {
+            menu.printMenu();
+        }
     }
 
     private void setInventaire() {this.inventaire = new ArrayList<>();}
@@ -265,7 +268,7 @@ public class Bibliotheque {
         } while (!exit);
     }
 
-    private void makeReference() throws CloneNotSupportedException {
+    private void makeReference() throws CloneNotSupportedException, InterruptedException {
         Scanner inputU = new Scanner(System.in);
         List<String> input = new ArrayList<>();
         String[] infoArr = {"le titre", "l'auteur", "le sujet"};
@@ -274,6 +277,8 @@ public class Bibliotheque {
             input.add(inputU.nextLine().strip());
         }
         this.addDocument(new OuvrageReference(input.get(0), input.get(1), input.get(2)));
+        System.out.println("L'ouvrage de référence à été ajouté à l'inventaire");
+        Thread.sleep(3000);
     }
 
     private void makeJournal() throws CloneNotSupportedException, InterruptedException {
@@ -286,13 +291,15 @@ public class Bibliotheque {
         }
         try {
             this.addDocument(new Journal(input.get(0), LocalDate.parse(input.get(1))));
+            System.out.println("Le journal à été ajouté à l'inventaire");
+            Thread.sleep(3000);
         } catch (DateTimeParseException e) {
             System.out.println("Le format de la date était incorrect.");
             Thread.sleep(3000);
         }
     }
 
-    private void makeBD() throws CloneNotSupportedException {
+    private void makeBD() throws CloneNotSupportedException, InterruptedException {
         Scanner inputU = new Scanner(System.in);
         List<String> input = new ArrayList<>();
         String[] infoArr = {"le titre", "l'auteur", "le dessinateur"};
@@ -301,9 +308,11 @@ public class Bibliotheque {
             input.add(inputU.nextLine().strip());
         }
         this.addDocument(new BD(input.get(0), input.get(1), input.get(2)));
+        System.out.println("La BD à été ajouté à l'inventaire");
+        Thread.sleep(3000);
     }
 
-    private void makeLivre() throws CloneNotSupportedException {
+    private void makeLivre() throws CloneNotSupportedException, InterruptedException {
         Scanner inputU = new Scanner(System.in);
         List<String> input = new ArrayList<>();
         String[] infoArr = {"le titre", "l'auteur"};
@@ -312,13 +321,27 @@ public class Bibliotheque {
             input.add(inputU.nextLine().strip());
         }
         this.addDocument(new Livre(input.get(0), input.get(1)));
+        System.out.println("Le livre à été ajouté à l'inventaire");
+        Thread.sleep(3000);
     }
 
     public void destroyDocument() throws Exception {
-        Scanner input = new Scanner(System.in);
-        showInventaire();
+        Scanner inputU = new Scanner(System.in);
+        int input;
+        String answer;
+        showInventaire(false);
         System.out.println("Quel document voulez-vous supprimer?:");
-        removeDocument(input.nextInt() - 1);
+        input = inputU.nextInt();
+        inputU.nextLine();
+        System.out.printf("Êtes-vous sûr de vouloir supprimer le document: %s intitulé %s\nOui ou Non?\n", inventaire.get(input - 1).getID(), inventaire.get(input - 1).getTitre());
+        answer = inputU.nextLine().toLowerCase().strip();
+        if (answer.equals("oui")) {
+            removeDocument(input - 1);
+            System.out.println("Le document à été supprimé de l'inventaire");
+        } else {
+            System.out.println("Aucun document n'a été supprimé de l'inventaire.");
+        }
+        Thread.sleep(3000);
     }
     public void makeMembre() throws CloneNotSupportedException {
         Scanner inputU = new Scanner(System.in);
