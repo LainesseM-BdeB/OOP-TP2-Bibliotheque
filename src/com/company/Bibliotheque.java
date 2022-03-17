@@ -328,16 +328,20 @@ public class Bibliotheque {
 
     public void destroyDocument() throws Exception {
         Scanner inputU = new Scanner(System.in);
-        int input;
+        String input;
+        int idxD;
         String answer;
         showInventaire(false);
         System.out.println("Quel document voulez-vous supprimer?:");
-        input = inputU.nextInt();
-        inputU.nextLine();
-        System.out.printf("Êtes-vous sûr de vouloir supprimer le document: %s intitulé %s\nOui ou Non?\n", inventaire.get(input - 1).getID(), inventaire.get(input - 1).getTitre());
+        input = inputU.nextLine().toLowerCase().strip();
+        if (input.equals("q")) {
+            return;
+        }
+        idxD = Integer.parseInt(input);
+        System.out.printf("Êtes-vous sûr de vouloir supprimer le document: %s intitulé %s\nOui ou Non?\n", inventaire.get(idxD - 1).getID(), inventaire.get(idxD - 1).getTitre());
         answer = inputU.nextLine().toLowerCase().strip();
         if (answer.equals("oui")) {
-            removeDocument(input - 1);
+            removeDocument(idxD - 1);
             System.out.println("Le document à été supprimé de l'inventaire");
         } else {
             System.out.println("Aucun document n'a été supprimé de l'inventaire.");
