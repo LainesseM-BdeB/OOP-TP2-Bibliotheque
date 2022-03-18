@@ -1,6 +1,9 @@
 package com.company;
 
+import com.sun.source.tree.MemberReferenceTree;
+
 import java.io.*;
+import java.lang.reflect.Member;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -16,8 +19,8 @@ public class Bibliotheque {
     private String telephone;
     private String courriel;
     private List<Document> inventaire;
-    private List<Member> bottin;
-    private List<Emprunt> emprunts;
+    private List<Membre> bottin;
+    private List<Emprunt> tracker;
 
     public Bibliotheque(String nom, String adresse, String ville, String province, String telephone, String courriel) {
         setNom(nom);
@@ -28,6 +31,7 @@ public class Bibliotheque {
         setCourriel(courriel);
         setInventaire();
         setBottin();
+        setTracker();
 
     }
 
@@ -76,7 +80,9 @@ public class Bibliotheque {
         }
     }
 
-    private void setInventaire() {this.inventaire = new ArrayList<>();}
+    private void setInventaire() {
+        this.inventaire = new ArrayList<>();
+    }
 
     public void addDocument(Document doc) throws CloneNotSupportedException {
         this.inventaire.add((Document) doc.clone());
@@ -119,21 +125,137 @@ public class Bibliotheque {
         fwrite.close();
     }
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-    public List<Member> getBottin() throws CloneNotSupportedException {
-        List<Member> bottin = new ArrayList<>();
-        for (Member mem : this.bottin) {
-            bottin.add((Member) mem.clone());
+    //Member
+    public List<Membre> getBottin() throws CloneNotSupportedException {
+        List<Membre> bottin = new ArrayList<>();
+        for (Membre mem:this.bottin) {
+            bottin.add((Membre) mem.clone());
         }
         return bottin;
     }
-    public void showBottin() throws Exception {
-        List<Member> bottin = getBottin();
+    public void showBottin(boolean isInteractive) throws Exception {
+        List<Membre> bottin =getBottin();
         List<String> options = new ArrayList<>();
-        Menu menu = new Menu("Bottin", this.getNom(), "Registre de la bibliothèque", options);
+        Scanner inputU = new Scanner(System.in);
+        String input;
+        boolean exit = false;
+        Menu menu = new Menu("bottin", this.getNom(), "Annuaire des adhérent", options);
         options = new ArrayList<>();
-        for (Member mem : bottin) {
-            String opt = mem.getID() + ": " + mem.getNom() + ": " + mem.getPrenom();
+        for (Membre mem : bottin) {
+            String opt = mem.getNom() + ": " + mem.getPrenom();
+            if (opt.length() > menu.widthMaxTextM) {
+                options.add(opt.substring(0, menu.widthMaxTextM));
+            } else {
+                options.add(opt);
+            }
+        }
+        menu.setOptionsM(options);
+        menu.genMenu();
+        if (isInteractive) {
+            do {
+                menu.printMenu();
+                System.out.println("Entrer le numéro correspondant pour plus de détails:");
+                input = inputU.nextLine().toLowerCase().strip();
+                if (input.equals("q")) {
+                    exit = true;
+                } else if (Integer.parseInt(input) > 0 || Integer.parseInt(input) < this.bottin.size()) {
+                    this.bottin.get(Integer.parseInt(input) - 1);
+                    Thread.sleep(3000);
+                } else {
+                    System.out.println("Une erreur c'est produite");
+                }
+            } while (!exit);
+        } else {
+            menu.printMenu();
+        }
+    }
+    private void setBottin() {
+        this.bottin = new ArrayList<>();
+    }
+    public void addMember(com.company.Membre mem) throws CloneNotSupportedException {
+        this.bottin.add((Membre) mem.clone());
+    }
+    public Recherche getMember(String ID) {
+        Recherche response = new Recherche();
+        for (Membre mem : this.bottin) {
+            if (mem.getID().equals(ID)) {
+                response.foundMember(this.bottin.indexOf(mem));
+                break;
+            }
+        }
+        return response;
+    }
+    public void loadBottin() throws FileNotFoundException {
+        File file = new File("resources\\membres.csv");
+        FileReader fread = new FileReader(file.getAbsolutePath());
+        BufferedReader bfread = new BufferedReader(fread);
+        for (String line : bfread.lines().toList()) {
+            System.out.println(line);
+        }
+    }
+    public void unloadBottin() throws IOException {
+        File file = new File("resources\\membres.csv");
+        FileWriter fwrite = new FileWriter(file.getAbsolutePath());
+        BufferedWriter bfwrite = new BufferedWriter(fwrite);
+        for (Membre mem : this.bottin) {
+            String csvLine = mem.toCsv();
+            bfwrite.write(csvLine);
+            bfwrite.newLine();
+        }
+        bfwrite.close();
+        fwrite.close();
+    }
+    public void makeMember() throws CloneNotSupportedException {
+        Scanner inputU = new Scanner(System.in);
+        List<String> input = new ArrayList<>();
+        String[] infoArr = {"le Nom", "le Prenom"};
+        for (String info : infoArr) {
+            System.out.printf("Entrez %s de l'adhérent:\n", info);
+            input.add(inputU.nextLine().strip());
+        }
+        this.addMember(new com.company.Membre(input.get(0), input.get(1)));
+    }
+    public void removeMember(int mem) {
+        this.bottin.remove(mem);
+    }
+    public void destroyMember() throws Exception {
+        Scanner inputU = new Scanner(System.in);
+        String input;
+        int idxD;
+        showInventaire(false);
+        System.out.println("Quel adhérent voulez-vous supprimer?:");
+        input = inputU.nextLine().toLowerCase().strip();
+        if (input.equals("q")) {
+            return;
+        }
+        idxD = Integer.parseInt(input);
+        System.out.printf("Êtes-vous sûr de vouloir annuler l'abonement: %s au nom de %s, %s\nOui ou Non?\n", bottin.get(idxD - 1).getID(), bottin.get(idxD - 1).getNom(), bottin.get(idxD - 1).getPrenom());
+        input = inputU.nextLine().toLowerCase().strip();
+        if (input.equals("oui")) {
+            removeDocument(idxD - 1);
+            System.out.println("L'abonné a été retiré du registre");
+        } else {
+            System.out.println("Aucun document n'a été supprimé de l'inventaire.");
+        }
+        Thread.sleep(3000);
+    }
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    //Emprunt
+
+    public List<Emprunt> getTracker() throws CloneNotSupportedException {
+        List<Emprunt> tracker = new ArrayList<>();
+        for (Emprunt tra : this.tracker) {
+            tracker.add((Emprunt) tra.clone());
+        }
+        return tracker;
+    }
+    public void showTracker() throws Exception {
+        List<Emprunt> tracker = getTracker();
+        List<String> options = new ArrayList<>();
+        Menu menu = new Menu("tracker", this.getNom(), "Suivi des emprunts", options);
+        options = new ArrayList<>();
+        for (Emprunt tra : tracker) {
+            String opt = tra.getMemID() + ": " + tra.getDocID() + ": " + tra.getDate_Out() + ": " + tra.getDate_In();
             if (opt.length() > menu.widthMaxTextM) {
                 options.add(opt.substring(0, menu.widthMaxTextM));
             } else {
@@ -144,55 +266,79 @@ public class Bibliotheque {
         menu.genMenu();
         menu.printMenu();
     }
-
-    private void setBottin() {
-        this.bottin = new ArrayList<>();
+    private void setTracker() {
+        this.tracker = new ArrayList<>();
     }
-
-    public void addMember(Member mem) throws CloneNotSupportedException {
-        this.bottin.add((Member) mem.clone());
+    public void addEmprunt(Emprunt tra) throws CloneNotSupportedException {
+        this.tracker.add((Emprunt) tra.clone());
     }
-    public Recherche getMember(String ID) {
+    public Recherche getEmprunt(String ID) {
         Recherche response = new Recherche();
-        for (Member mem : this.bottin) {
-            if (mem.getID().equals(ID)) {
-                response.foundMember(this.bottin.indexOf(mem));
+        for (Emprunt tra : this.tracker) {
+            if (tra.getDocID().equals(ID)) {
+                response.foundMember(this.tracker.indexOf(tra));
                 break;
             }
         }
         return response;
     }
-
-    public void loadBottin() throws FileNotFoundException {
-        File file = new File("resources\\membres.csv");
+    public void loadTracker() throws FileNotFoundException {
+        File file = new File("resources\\emprunts.csv");
         FileReader fread = new FileReader(file.getAbsolutePath());
         BufferedReader bfread = new BufferedReader(fread);
         for (String line : bfread.lines().toList()) {
             System.out.println(line);
         }
     }
-
-    public void unloadBottin() throws IOException {
-        File file = new File("resources\\membres.csv");
+    public void unloadTracker() throws IOException {
+        File file = new File("resources\\emprunts.csv");
         FileWriter fwrite = new FileWriter(file.getAbsolutePath());
         BufferedWriter bfwrite = new BufferedWriter(fwrite);
-        for (Member mem : this.bottin) {
-            String csvLine = mem.toCsv();
+        for (Emprunt tra : this.tracker) {
+            String csvLine = tra.toCsv();
             bfwrite.write(csvLine);
             bfwrite.newLine();
         }
         bfwrite.close();
         fwrite.close();
     }
+    public void makeEmprunt () throws CloneNotSupportedException {
+            Scanner inputU = new Scanner(System.in);
+            List<String> input = new ArrayList<>();
+            String[] infoArr = {"le code de l'adhérant :", "le code du document :"};
+            for (String info : infoArr) {
+                System.out.printf("Entrez %s \n", info);
+                input.add(inputU.nextLine().strip());
+            }
+            this.addEmprunt(new Emprunt(input.get(0), input.get(1)));
+        }
+    public void removeEmprunt ( int tra){
+            this.tracker.remove(tra);
+        }
+    public void destroyEmprunt () throws Exception {
+            Scanner inputU = new Scanner(System.in);
+            String input;
+            int idxD;
+            showInventaire(false);
+            System.out.println("Quel emprunt voulez-vous supprimer?:");
+            input = inputU.nextLine().toLowerCase().strip();
+            if (input.equals("q")) {
+                return;
+            }
+            idxD = Integer.parseInt(input);
+            System.out.printf("Êtes-vous sûr de vouloir supprimer l'emprunt du document: %s \nOui ou Non?\n", tracker.get(idxD - 1).getEmpID());
+            input = inputU.nextLine().toLowerCase().strip();
+            if (input.equals("oui")) {
+                removeEmprunt(idxD - 1);
+                System.out.println("L'emprunt à été supprimé.");
+            } else {
+                System.out.println("Aucun emprunt correspondant.");
+            }
+            Thread.sleep(3000);
+        }
 
 
-    //public List<Emprunt> getEmprunts() {
-    //    return emprunts;
-    //}
-
-    //public void setEmprunts(List<Emprunt> emprunts) {
-    //    this.emprunts = emprunts;
-    //}
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
     public String getAdresse() {
         return this.adresse;
@@ -264,7 +410,10 @@ public class Bibliotheque {
                 case "3" -> makeJournal();
                 case "4" -> makeReference();
                 case "q" -> exit = true;
-                default -> {System.out.println("Une erreur c'est produite"); wait(3000);}
+                default -> {
+                    System.out.println("Une erreur c'est produite");
+                    wait(3000);
+                }
             }
         } while (!exit);
     }
@@ -330,7 +479,6 @@ public class Bibliotheque {
         Scanner inputU = new Scanner(System.in);
         String input;
         int idxD;
-        String answer;
         showInventaire(false);
         System.out.println("Quel document voulez-vous supprimer?:");
         input = inputU.nextLine().toLowerCase().strip();
@@ -339,8 +487,8 @@ public class Bibliotheque {
         }
         idxD = Integer.parseInt(input);
         System.out.printf("Êtes-vous sûr de vouloir supprimer le document: %s intitulé %s\nOui ou Non?\n", inventaire.get(idxD - 1).getID(), inventaire.get(idxD - 1).getTitre());
-        answer = inputU.nextLine().toLowerCase().strip();
-        if (answer.equals("oui")) {
+        input = inputU.nextLine().toLowerCase().strip();
+        if (input.equals("oui")) {
             removeDocument(idxD - 1);
             System.out.println("Le document à été supprimé de l'inventaire");
         } else {
@@ -348,23 +496,19 @@ public class Bibliotheque {
         }
         Thread.sleep(3000);
     }
-    public void makeMembre() throws CloneNotSupportedException {
-        Scanner inputU = new Scanner(System.in);
-        List<String> input = new ArrayList<>();
-        String[] infoArr = {"le Nom", "le Prenom"};
-        for (String info : infoArr) {
-            System.out.printf("Entrez %s de l'adhérent:\n", info);
-            input.add(inputU.nextLine().strip());
-        }
-        this.addMember(new Member(input.get(0), input.get(1)));
-    }
-    public void removeMember(int mem) {
-        this.bottin.remove(mem);
-    }
-    public void destroyMember() throws Exception {
-        Scanner input = new Scanner(System.in);
-        showBottin();
-        System.out.println("Quel adhérent voulez-vous supprimer?:");
-        removeMember(input.nextInt() - 1);
-    }
+
+ // private void makeContact() throws CloneNotSupportedException, InterruptedException {
+ //     Scanner inputU = new Scanner(System.in);
+ //     List<String> input = new ArrayList<>();
+ //     String[] infoArr = {" le nom", "le prenom"};
+ //     for (String info : infoArr) {
+ //         System.out.printf("Entrez %s de l'adhérent:\n", info);
+ //         input.add(inputU.nextLine().strip());
+ //     }
+ //     this.addMember(new Contact(input.get(0),input.get(1)));
+ //     System.out.println("L'adhérent à été ajouté au registre");
+ //     Thread.sleep(3000);
+ // }
+
 }
+

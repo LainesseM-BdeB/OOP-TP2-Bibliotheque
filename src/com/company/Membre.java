@@ -1,7 +1,7 @@
 package com.company;
 
 
-public class Member implements Cloneable {
+public class Membre implements Cloneable {
 
     public static int num = 1;
     //attributs
@@ -14,7 +14,7 @@ public class Member implements Cloneable {
     private String init;
 
 
-    public Member(String p_nom, String p_prenom) {
+    public Membre(String p_nom, String p_prenom) {
         this.setNom(p_nom);
         this.setPrenom(p_prenom);
         this.setInit();
