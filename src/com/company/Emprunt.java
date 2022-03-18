@@ -23,7 +23,7 @@ public class Emprunt implements Cloneable {
         this.setMemID(pmemID);
         this.setDate_Out();
         this.setDate_In();
-        this.setExtend();
+        this.isExtend();
     }
     public String getEmpID() {
         return EmpID;

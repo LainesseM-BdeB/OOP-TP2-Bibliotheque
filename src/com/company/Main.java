@@ -15,10 +15,12 @@ public class Main {
         bibli.addDocument(new BD("Java pour les nuls en dessins!", "Maxime Lainesse", "Vincent Poirier"));
         bibli.addDocument(new Journal("Le journal de Baie-Comeau", LocalDate.now()));
         bibli.addDocument(new OuvrageReference("L'atlas des patates", "Madame Brossard", "Alimentation"));
-        bibli.addMember(new Member("Trump","Donald"));
-        bibli.addMember(new Member("Case","Justin"));
-        bibli.addMember(new Member("Croteau","Marcel"));
-        bibli.addMember(new Member("Tremblay","Sylvie"));
+        bibli.addMember(new Membre("Trump","Donald"));
+        bibli.addMember(new Membre("Case","Justin"));
+        bibli.addMember(new Membre("Croteau","Marcel"));
+        bibli.addMember(new Membre("Tremblay","Sylvie"));
+        bibli.addEmprunt(new Emprunt("D3-J1","tru1"));
+        bibli.addEmprunt(new Emprunt("D4-J2","cas1"));
 
         //Generating main menu
         List<String> mainOpt = new ArrayList<>();
@@ -38,7 +40,7 @@ public class Main {
             //System.out.println(System.lineSeparator().repeat(5));
             switch (input) {
                 case "q" -> exit = true;
-                case "1" -> System.out.println("Emprunt n'est pas encore fonctionel");
+                case "1" -> traMenu(bibli);
                 case "2" -> invMenu(bibli);
                 case "3" -> memMenu(bibli);
                 case "4" -> System.out.println("Info n'est pas encore fonctionel");
@@ -207,8 +209,8 @@ public class Main {
                 exit = true;
             } else {
                 switch (Integer.parseInt(input)) {
-                    case 1 -> bibli.showBottin();
-                    case 2 -> bibli.makeMembre();
+                    case 1 -> bibli.showBottin(true);
+                    case 2 -> bibli.makeMember();
                     case 3 -> bibli.destroyMember();
                     default -> {
                         System.out.println("Une erreur c'est produite");
@@ -217,6 +219,38 @@ public class Main {
                 }
             }
         } while (!exit);
+    }
+        private static void traMenu(Bibliotheque bibli) throws Exception{
+            //Generating Emprunt menu
+            List<String> traOpt = new ArrayList<>();
+            Scanner inputU = new Scanner(System.in);
+            String input;
+            boolean exit = false;
+            traOpt.add("Afficher la liste des Emprunts");
+            traOpt.add("Enregistrer un emprunt");
+            traOpt.add("Annuler un emprunt");
+            traOpt.add("Prolonger un emprunt");
+            Menu traM = new Menu("tracker", bibli.getNom(), "Gestion des emprunts", traOpt);
+            traM.genMenu();
+            do {
+                traM.printMenu();
+                System.out.println("Choisissez une des options:");
+                input = inputU.nextLine().toLowerCase().strip();
+                if (input.equals("q")) {
+                    exit = true;
+                } else {
+                    switch (Integer.parseInt(input)) {
+                        case 1 -> bibli.showTracker(true);
+                        case 2 -> bibli.makeEmprunt();
+                        case 3 -> bibli.destroyEmprunt();
+                        case 4 -> bibli.Extension();
+                        default -> {
+                            System.out.println("Une erreur c'est produite");
+                            Thread.sleep(3000);
+                        }
+                    }
+                }
+            } while (!exit);
     }
 }
 

@@ -1,9 +1,6 @@
 package com.company;
 
-import com.sun.source.tree.MemberReferenceTree;
-
 import java.io.*;
-import java.lang.reflect.Member;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -222,7 +219,7 @@ public class Bibliotheque {
         Scanner inputU = new Scanner(System.in);
         String input;
         int idxD;
-        showInventaire(false);
+        showBottin(false);
         System.out.println("Quel adhérent voulez-vous supprimer?:");
         input = inputU.nextLine().toLowerCase().strip();
         if (input.equals("q")) {
@@ -232,7 +229,7 @@ public class Bibliotheque {
         System.out.printf("Êtes-vous sûr de vouloir annuler l'abonement: %s au nom de %s, %s\nOui ou Non?\n", bottin.get(idxD - 1).getID(), bottin.get(idxD - 1).getNom(), bottin.get(idxD - 1).getPrenom());
         input = inputU.nextLine().toLowerCase().strip();
         if (input.equals("oui")) {
-            removeDocument(idxD - 1);
+            removeMember(idxD - 1);
             System.out.println("L'abonné a été retiré du registre");
         } else {
             System.out.println("Aucun document n'a été supprimé de l'inventaire.");
@@ -249,7 +246,7 @@ public class Bibliotheque {
         }
         return tracker;
     }
-    public void showTracker() throws Exception {
+    public void showTracker(boolean isInteractive) throws Exception {
         List<Emprunt> tracker = getTracker();
         List<String> options = new ArrayList<>();
         Menu menu = new Menu("tracker", this.getNom(), "Suivi des emprunts", options);
@@ -305,13 +302,38 @@ public class Bibliotheque {
     public void makeEmprunt () throws CloneNotSupportedException {
             Scanner inputU = new Scanner(System.in);
             List<String> input = new ArrayList<>();
-            String[] infoArr = {"le code de l'adhérant :", "le code du document :"};
+            String[] infoArr = {"le code du document :", "le code de l'adhérant :"};
             for (String info : infoArr) {
                 System.out.printf("Entrez %s \n", info);
                 input.add(inputU.nextLine().strip());
             }
             this.addEmprunt(new Emprunt(input.get(0), input.get(1)));
         }
+
+
+    public void Extension() throws Exception {
+        Scanner inputU = new Scanner(System.in);
+        String input;
+        int idxD;
+        showTracker(false);
+        System.out.println("Quel emprunt voulez-vous prolonger?:");
+        input = inputU.nextLine().toLowerCase().strip();
+        if (input.equals("q")) {
+            return;
+        }
+        idxD = Integer.parseInt(input);
+        System.out.printf("Êtes-vous sûr de vouloir prolonger l'emprunt du document: %s \nOui ou Non?\n", tracker.get(idxD - 1).getDocID());
+        input = inputU.nextLine().toLowerCase().strip();
+        if (input.equals("oui")) {
+
+            removeEmprunt(idxD - 1);
+            System.out.println("L'emprunt à été supprimé.");
+        } else {
+            System.out.println("Aucun emprunt correspondant.");
+        }
+        Thread.sleep(3000);
+    }
+
     public void removeEmprunt ( int tra){
             this.tracker.remove(tra);
         }
@@ -319,14 +341,14 @@ public class Bibliotheque {
             Scanner inputU = new Scanner(System.in);
             String input;
             int idxD;
-            showInventaire(false);
+            showTracker(false);
             System.out.println("Quel emprunt voulez-vous supprimer?:");
             input = inputU.nextLine().toLowerCase().strip();
             if (input.equals("q")) {
                 return;
             }
             idxD = Integer.parseInt(input);
-            System.out.printf("Êtes-vous sûr de vouloir supprimer l'emprunt du document: %s \nOui ou Non?\n", tracker.get(idxD - 1).getEmpID());
+            System.out.printf("Êtes-vous sûr de vouloir supprimer l'emprunt du document: %s \nOui ou Non?\n", tracker.get(idxD - 1).getDocID());
             input = inputU.nextLine().toLowerCase().strip();
             if (input.equals("oui")) {
                 removeEmprunt(idxD - 1);
