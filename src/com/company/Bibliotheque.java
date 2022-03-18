@@ -139,7 +139,7 @@ public class Bibliotheque {
         Menu menu = new Menu("bottin", this.getNom(), "Annuaire des adhérent", options);
         options = new ArrayList<>();
         for (Membre mem : bottin) {
-            String opt = mem.getNom() + ": " + mem.getPrenom();
+            String opt = mem.getNom() + ", " + mem.getPrenom();
             if (opt.length() > menu.widthMaxTextM) {
                 options.add(opt.substring(0, menu.widthMaxTextM));
             } else {
@@ -211,6 +211,18 @@ public class Bibliotheque {
             input.add(inputU.nextLine().strip());
         }
         this.addMember(new com.company.Membre(input.get(0), input.get(1)));
+    }
+    public void makeContact() throws CloneNotSupportedException, InterruptedException {
+        Scanner inputU = new Scanner(System.in);
+        List<String> input = new ArrayList<>();
+        String[] infoArr = {"Le nom", "le prénom", "Le courriel", "le téléphone"};
+        for (String info : infoArr) {
+            System.out.printf("Entrez %s de l'adhérent:\n", info);
+            input.add(inputU.nextLine().strip());
+        }
+        this.addMember(new Contact(input.get(0), input.get(1), input.get(2), input.get(3)));
+        System.out.println("L'adhérent à été ajouté au registre");
+        Thread.sleep(3000);
     }
     public void removeMember(int mem) {
         this.bottin.remove(mem);
@@ -309,8 +321,10 @@ public class Bibliotheque {
             }
             this.addEmprunt(new Emprunt(input.get(0), input.get(1)));
         }
-
-
+    public String setExtendedEmprunt(int idx) {
+        this.tracker.get(idx).setExtend();
+        return this.tracker.get(idx).getDate_In();
+    }
     public void Extension() throws Exception {
         Scanner inputU = new Scanner(System.in);
         String input;
@@ -330,12 +344,6 @@ public class Bibliotheque {
         }
         Thread.sleep(3000);
     }
-
-    public String setExtendedEmprunt(int idx) {
-        this.tracker.get(idx).setExtend();
-        return this.tracker.get(idx).getDate_In();
-    }
-
     public void removeEmprunt ( int tra){
             this.tracker.remove(tra);
         }
@@ -521,18 +529,6 @@ public class Bibliotheque {
         Thread.sleep(3000);
     }
 
- // private void makeContact() throws CloneNotSupportedException, InterruptedException {
- //     Scanner inputU = new Scanner(System.in);
- //     List<String> input = new ArrayList<>();
- //     String[] infoArr = {" le nom", "le prenom"};
- //     for (String info : infoArr) {
- //         System.out.printf("Entrez %s de l'adhérent:\n", info);
- //         input.add(inputU.nextLine().strip());
- //     }
- //     this.addMember(new Contact(input.get(0),input.get(1)));
- //     System.out.println("L'adhérent à été ajouté au registre");
- //     Thread.sleep(3000);
- // }
 
 }
 

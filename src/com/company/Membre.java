@@ -46,21 +46,25 @@ public class Membre implements Cloneable {
     }
 
     public void setInit(){
-       this.init = nom.substring(0,3);
+        if (nom.length()<3){
+            this.init=nom.substring(0,nom.length());
+        } else {
+            this.init = nom.substring(0, 3);
+        }
    }
 
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
-    public void afficher() {
+    public void printMem() {
         System.out.printf(
 
                     "id#: "+this.ID+"%n"
-                    +"nom: "+this.nom +"%n"
-                    +"prenom: "+this.prenom +"%n");
+                    +"Nom: "+this.nom +"%n"
+                    +"Prénom: "+this.prenom +"%n");
     }
-    public void printMem() {
-        System.out.printf(getNom(), getPrenom());
+    public void printMemX() {
+        System.out.printf(getNom()+", "+ getPrenom());
     }
     public String toCsv() {
         String csvLine;
