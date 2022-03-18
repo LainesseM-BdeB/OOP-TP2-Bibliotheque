@@ -5,8 +5,6 @@ import java.util.*;
 
 public class Main {
 
-
-
     public static void main(String[] args) throws Exception {
         //Live code for menu DO NOT DELETE OR CHANGE vvvvv
         boolean exit = false;

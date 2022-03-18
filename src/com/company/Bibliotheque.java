@@ -156,7 +156,7 @@ public class Bibliotheque {
                 if (input.equals("q")) {
                     exit = true;
                 } else if (Integer.parseInt(input) > 0 || Integer.parseInt(input) < this.bottin.size()) {
-                    this.bottin.get(Integer.parseInt(input) - 1);
+                    this.bottin.get(Integer.parseInt(input) - 1).printMem();
                     Thread.sleep(3000);
                 } else {
                     System.out.println("Une erreur c'est produite");
@@ -325,13 +325,15 @@ public class Bibliotheque {
         System.out.printf("Êtes-vous sûr de vouloir prolonger l'emprunt du document: %s \nOui ou Non?\n", tracker.get(idxD - 1).getDocID());
         input = inputU.nextLine().toLowerCase().strip();
         if (input.equals("oui")) {
-
-            removeEmprunt(idxD - 1);
-            System.out.println("L'emprunt à été supprimé.");
-        } else {
-            System.out.println("Aucun emprunt correspondant.");
+            String newDate = setExtendedEmprunt(idxD - 1);
+            System.out.println("L'extension à été faite jusqu'au: " + newDate);
         }
         Thread.sleep(3000);
+    }
+
+    public String setExtendedEmprunt(int idx) {
+        this.tracker.get(idx).setExtend();
+        return this.tracker.get(idx).getDate_In();
     }
 
     public void removeEmprunt ( int tra){

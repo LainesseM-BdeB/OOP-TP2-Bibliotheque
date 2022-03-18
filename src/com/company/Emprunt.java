@@ -13,17 +13,15 @@ public class Emprunt implements Cloneable {
     private String memID;
     private String docId;
     private String EmpID;
-    private boolean extend;
+    private boolean extend = false;
 
 
     public Emprunt(String pdocID, String pmemID){
-
         this.setEmpID();
         this.setDocId(pdocID);
         this.setMemID(pmemID);
         this.setDate_Out();
         this.setDate_In();
-        this.isExtend();
     }
     public String getEmpID() {
         return EmpID;
@@ -71,9 +69,9 @@ public class Emprunt implements Cloneable {
     public void setExtend() {
         if (isExtend()) {
             System.out.println("La durée d'emprunt a déjà été prolongé.");
-        }else
-        {  this.extend = true;
-           this.date_In=LocalDate.parse(this.date_In).plusDays(7).toString();
+        } else {
+            this.extend = true;
+            this.date_In=LocalDate.parse(this.date_In).plusDays(7).toString();
         }
     }
 
