@@ -33,6 +33,9 @@ public class Recherche {
     public int getDocument() {
         return this.document;
     }
+    public int getMember() {
+        return this.member;
+    }
 
     public void testPostgresql() {
         Connection conn;

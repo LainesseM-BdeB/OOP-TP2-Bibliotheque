@@ -9,6 +9,7 @@ public class Menu {
     String titleM;
     String descM;
     List<String> optionsM;
+    List<String> optionsX;
     String[] menuM;
     String borderM = "#"; //Character to use for the menu border
     String borderLine = "";
@@ -64,6 +65,7 @@ public class Menu {
             }
             borderLine += borderM;
         }
+
         skipLine += "\n";
         borderLine += "\n";
         optionsLength = optionsM.size();

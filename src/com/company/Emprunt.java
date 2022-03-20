@@ -7,28 +7,28 @@ public class Emprunt implements Cloneable {
     public static LocalDate date=LocalDate.now();
 
     //attributs
-
+    private static int empNum = 1;
     private String date_Out;
     private String date_In;
     private String memID;
     private String docId;
-    private String EmpID;
     private boolean extend = false;
-
+    private String empID;
 
     public Emprunt(String pdocID, String pmemID){
-        this.setEmpID();
+
         this.setDocId(pdocID);
         this.setMemID(pmemID);
+        this.setEmpID();
         this.setDate_Out();
         this.setDate_In();
+        empNum++;
+    }
+    public void setEmpID() {
+        this.empID =docId+"/"+memID+"/"+empNum;
     }
     public String getEmpID() {
-        return EmpID;
-    }
-
-    public void setEmpID() {
-        EmpID = memID+docId;
+        return this.empID;
     }
     public String getDate_Out() {
         return date_Out;
@@ -51,7 +51,7 @@ public class Emprunt implements Cloneable {
     }
 
     public void setMemID(String memID) {
-        this.memID = memID;
+        this.memID =memID;
     }
 
     public String getDocID() {
@@ -81,6 +81,7 @@ public class Emprunt implements Cloneable {
     public String toCsv() {
         String csvLine;
         csvLine = this.getClass().getSimpleName();
+        csvLine += ";" + this.getEmpID();
         csvLine += ";" + this.getMemID();
         csvLine += ";" + this.getDocID();
         csvLine += ";" + this.getDate_Out();

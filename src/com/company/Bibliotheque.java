@@ -264,7 +264,7 @@ public class Bibliotheque {
         Menu menu = new Menu("tracker", this.getNom(), "Suivi des emprunts", options);
         options = new ArrayList<>();
         for (Emprunt tra : tracker) {
-            String opt = tra.getMemID() + ": " + tra.getDocID() + ": " + tra.getDate_Out() + ": " + tra.getDate_In();
+            String opt = tra.getEmpID() + ": " + tra.getMemID() + ": " + tra.getDocID() + ": " + tra.getDate_Out() + ": " + tra.getDate_In();
             if (opt.length() > menu.widthMaxTextM) {
                 options.add(opt.substring(0, menu.widthMaxTextM));
             } else {
@@ -311,13 +311,37 @@ public class Bibliotheque {
         bfwrite.close();
         fwrite.close();
     }
-    public void makeEmprunt () throws CloneNotSupportedException {
+    public void makeEmprunt () throws Exception {
+        int menuNum=0;
+        String TEXT_YELLOW = "\u001B[33m";
+        String TEXT_RESET = "\u001B[0m";
             Scanner inputU = new Scanner(System.in);
             List<String> input = new ArrayList<>();
             String[] infoArr = {"le code du document :", "le code de l'adhérant :"};
             for (String info : infoArr) {
+                if (menuNum==0){
+                BufferedReader in = new BufferedReader(new FileReader("resources/inventaire.csv"));
+                String line;
+                while ((line = in.readLine()) != null)
+                {
+                    // Afficher le contenu du fichier inventaire
+                    System.out.println(TEXT_YELLOW +line+TEXT_RESET);
+                }
+                in.close();
+                menuNum++;} else  {
+              BufferedReader in = new BufferedReader(new FileReader("resources/membres.csv"));
+                    String line;
+                    while ((line = in.readLine()) != null)
+                    {
+                        // Afficher le contenu du fichier membres
+                        System.out.println(TEXT_YELLOW +line+TEXT_RESET);
+                    }
+                    in.close();
+
+                }
                 System.out.printf("Entrez %s \n", info);
                 input.add(inputU.nextLine().strip());
+
             }
             this.addEmprunt(new Emprunt(input.get(0), input.get(1)));
         }
