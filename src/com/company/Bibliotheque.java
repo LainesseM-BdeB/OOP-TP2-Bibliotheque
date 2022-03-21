@@ -5,6 +5,7 @@ import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -347,24 +348,39 @@ public class Bibliotheque {
             String[] infoArr = {"le code du document :", "le code de l'adhérant :"};
             for (String info : infoArr) {
                 if (menuNum){
-                    BufferedReader in = new BufferedReader(new FileReader("resources/inventaire.csv"));
-                    String line;
-                    while ((line = in.readLine()) != null)
-                    {
-                        // Afficher le contenu du fichier inventaire
-                        System.out.println(TEXT_YELLOW +line+TEXT_RESET);
+                    List<Document> inventaire = getInventaire();
+                    List<String> options = new ArrayList<>();
+                    Menu menu = new Menu("Inventaire", this.getNom(), "Inventaire de la bibliothèque", options);
+                    options = new ArrayList<>();
+                    for (Document doc : inventaire) {
+                        String opt = doc.getID() + ": " + doc.getTitre();
+                        if (opt.length() > menu.widthMaxTextM) {
+                            options.add(opt.substring(0, menu.widthMaxTextM));
+                        } else {
+                            options.add(opt);
+                        }
                     }
-                in.close();
+                    menu.setOptionsM(options);
+                    menu.genMenu();
+                    menu.printMenu();
+
                 menuNum=false;
                 } else  {
-                    BufferedReader in = new BufferedReader(new FileReader("resources/membres.csv"));
-                    String line;
-                    while ((line = in.readLine()) != null)
-                    {
-                        // Afficher le contenu du fichier membres
-                        System.out.println(TEXT_YELLOW +line+TEXT_RESET);
+                    List<Membre> bottin = getBottin();
+                    List<String> options = new ArrayList<>();
+                    Menu menu = new Menu("Registre", this.getNom(), "Registre des adhérent", options);
+                    options = new ArrayList<>();
+                    for (Membre mem : bottin) {
+                        String opt = mem.getID() + ": " + mem.getNom()+ ", " + mem.getPrenom();
+                        if (opt.length() > menu.widthMaxTextM) {
+                            options.add(opt.substring(0, menu.widthMaxTextM));
+                        } else {
+                            options.add(opt);
+                        }
                     }
-                    in.close();
+                    menu.setOptionsM(options);
+                    menu.genMenu();
+                    menu.printMenu();
                 }
                 System.out.printf("Entrez %s \n", info);
                 input.add(inputU.nextLine().strip());
