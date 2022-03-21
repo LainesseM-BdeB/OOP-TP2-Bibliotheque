@@ -1,6 +1,7 @@
 package com.company;
 
 import java.io.*;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -65,13 +66,18 @@ public class Bibliotheque {
                 input = inputU.nextLine().toLowerCase().strip();
                 if (input.equals("q")) {
                     exit = true;
-                } else if (Integer.parseInt(input) > 0 || Integer.parseInt(input) < this.inventaire.size()) {
-                    this.inventaire.get(Integer.parseInt(input) - 1).printInfo();
-                    Thread.sleep(3000);
-                } else {
-                    System.out.println("Une erreur c'est produite");
                 }
-            } while (!exit);
+                try {
+                    if (Integer.parseInt(input) > 0 && Integer.parseInt(input) < this.inventaire.size()) {
+                        this.inventaire.get(Integer.parseInt(input) - 1).printInfo();
+                        Thread.sleep(3000);
+                    } else {
+                        System.out.println("Veuillez entrer un chiffre valide.");
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Une erreur c'est produite. Veuillez entrez un chiffre valide ou Q");
+                }
+            }while (!exit);
         } else {
             menu.printMenu();
         }
