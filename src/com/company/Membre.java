@@ -63,9 +63,6 @@ public class Membre implements Cloneable {
                     +"Nom: "+this.nom +"%n"
                     +"Prénom: "+this.prenom +"%n");
     }
-    public void printMemX() {
-        System.out.printf(getNom()+", "+ getPrenom());
-    }
     public String toCsv() {
         String csvLine;
         csvLine = this.getClass().getSimpleName();

@@ -248,9 +248,9 @@ public class Bibliotheque {
         input = inputU.nextLine().toLowerCase().strip();
         if (input.equals("oui")) {
             removeMember(idxD - 1);
-            System.out.println("L'abonné a été retiré du registre");
+            System.out.println("L'adhérent a été retiré du registre");
         } else {
-            System.out.println("Aucun document n'a été supprimé de l'inventaire.");
+            System.out.println("Aucun adhérent n'a été retiré du registre.");
         }
         Thread.sleep(3000);
     }
@@ -267,6 +267,9 @@ public class Bibliotheque {
     public void showTracker(boolean isInteractive) throws Exception {
         List<Emprunt> tracker = getTracker();
         List<String> options = new ArrayList<>();
+        Scanner inputU = new Scanner(System.in);
+        String input;
+        boolean exit = false;
         Menu menu = new Menu("tracker", this.getNom(), "Suivi des emprunts", options);
         options = new ArrayList<>();
         for (Emprunt tra : tracker) {
@@ -277,9 +280,25 @@ public class Bibliotheque {
                 options.add(opt);
             }
         }
-        menu.setOptionsM(options);
-        menu.genMenu();
-        menu.printMenu();
+      menu.setOptionsM(options);
+      menu.genMenu();
+        if (isInteractive) {
+            do {
+                menu.printMenu();
+                System.out.println("Entrer le numéro correspondant pour plus de détails:");
+                input = inputU.nextLine().toLowerCase().strip();
+                if (input.equals("q")) {
+                    exit = true;
+                } else if (Integer.parseInt(input) > 0 || Integer.parseInt(input) < this.tracker.size()) {
+                    this.tracker.get(Integer.parseInt(input) - 1).printEmp();
+                    Thread.sleep(3000);
+                } else {
+                    System.out.println("Une erreur c'est produite");
+                }
+            } while (!exit);
+        } else {
+            menu.printMenu();
+        }
     }
     private void setTracker() {
         this.tracker = new ArrayList<>();
@@ -318,24 +337,27 @@ public class Bibliotheque {
         fwrite.close();
     }
     public void makeEmprunt () throws Exception {
-        int menuNum=0;
+        boolean menuNum = true;
         String TEXT_YELLOW = "\u001B[33m";
         String TEXT_RESET = "\u001B[0m";
+
+
             Scanner inputU = new Scanner(System.in);
             List<String> input = new ArrayList<>();
             String[] infoArr = {"le code du document :", "le code de l'adhérant :"};
             for (String info : infoArr) {
-                if (menuNum==0){
-                BufferedReader in = new BufferedReader(new FileReader("resources/inventaire.csv"));
-                String line;
-                while ((line = in.readLine()) != null)
-                {
-                    // Afficher le contenu du fichier inventaire
-                    System.out.println(TEXT_YELLOW +line+TEXT_RESET);
-                }
+                if (menuNum){
+                    BufferedReader in = new BufferedReader(new FileReader("resources/inventaire.csv"));
+                    String line;
+                    while ((line = in.readLine()) != null)
+                    {
+                        // Afficher le contenu du fichier inventaire
+                        System.out.println(TEXT_YELLOW +line+TEXT_RESET);
+                    }
                 in.close();
-                menuNum++;} else  {
-              BufferedReader in = new BufferedReader(new FileReader("resources/membres.csv"));
+                menuNum=false;
+                } else  {
+                    BufferedReader in = new BufferedReader(new FileReader("resources/membres.csv"));
                     String line;
                     while ((line = in.readLine()) != null)
                     {
@@ -343,11 +365,9 @@ public class Bibliotheque {
                         System.out.println(TEXT_YELLOW +line+TEXT_RESET);
                     }
                     in.close();
-
                 }
                 System.out.printf("Entrez %s \n", info);
                 input.add(inputU.nextLine().strip());
-
             }
             this.addEmprunt(new Emprunt(input.get(0), input.get(1)));
         }
@@ -370,7 +390,7 @@ public class Bibliotheque {
         input = inputU.nextLine().toLowerCase().strip();
         if (input.equals("oui")) {
             String newDate = setExtendedEmprunt(idxD - 1);
-            System.out.println("L'extension à été faite jusqu'au: " + newDate);
+            System.out.println("L'emprunt à été prolongé jusqu'au: " + newDate);
         }
         Thread.sleep(3000);
     }

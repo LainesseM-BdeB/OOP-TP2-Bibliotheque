@@ -14,6 +14,7 @@ public class Emprunt implements Cloneable {
     private String docId;
     private boolean extend = false;
     private String empID;
+    private String prolonge="Oui";
 
     public Emprunt(String pdocID, String pmemID){
 
@@ -22,6 +23,7 @@ public class Emprunt implements Cloneable {
         this.setEmpID();
         this.setDate_Out();
         this.setDate_In();
+
         empNum++;
     }
     public void setEmpID() {
@@ -69,11 +71,25 @@ public class Emprunt implements Cloneable {
     public void setExtend() {
         if (isExtend()) {
             System.out.println("La durée d'emprunt a déjà été prolongé.");
+
         } else {
             this.extend = true;
             this.date_In=LocalDate.parse(this.date_In).plusDays(7).toString();
+            this.prolonge="Non";
         }
     }
+
+    public void printEmp() {
+        System.out.printf(
+
+                "Emprunt ID: " + this.empID + "%n"
+                        + "Document ID: " + this.docId + "%n"
+                        + "Adhérent ID: " + this.memID + "%n"
+                        +"Date de sortie: "+this.date_Out +"%n"
+                        +"Date de retour: "+this.date_In+"%n"
+                        + "Prolongation permise: " + this.prolonge+ "%n");
+    }
+
 
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
