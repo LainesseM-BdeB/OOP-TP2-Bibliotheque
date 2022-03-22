@@ -354,15 +354,21 @@ public class Bibliotheque {
                     options = new ArrayList<>();
                     for (Document doc : inventaire) {
                         String opt = doc.getID() + ": " + doc.getTitre();
-                        if (opt.length() > menu.widthMaxTextM) {
-                            options.add(opt.substring(0, menu.widthMaxTextM));
-                        } else {
+                        if (doc.getID().indexOf('L')>0){
+      //                     if (opt.length() > menu.widthMaxTextM) {
+      //                         options.add(opt.substring(0, menu.widthMaxTextM));
+      //                     }
                             options.add(opt);
+                          menu.setOptionsM(options);
+                          menu.genMenu();
+                          menu.printMenu();
+                          //  System.out.printf (TEXT_YELLOW+options+TEXT_RESET+"%n");
+
                         }
+
                     }
-                    menu.setOptionsM(options);
-                    menu.genMenu();
-                    menu.printMenu();
+                    System.out.println(TEXT_YELLOW+"---------------------------------------"+TEXT_RESET);
+
 
                 menuNum=false;
                 } else  {
