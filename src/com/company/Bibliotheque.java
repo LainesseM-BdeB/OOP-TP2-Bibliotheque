@@ -341,58 +341,71 @@ public class Bibliotheque {
         boolean menuNum = true;
         String TEXT_YELLOW = "\u001B[33m";
         String TEXT_RESET = "\u001B[0m";
-
-
-            Scanner inputU = new Scanner(System.in);
-            List<String> input = new ArrayList<>();
-            String[] infoArr = {"le code du document :", "le code de l'adhérant :"};
-            for (String info : infoArr) {
-                if (menuNum){
-                    List<Document> inventaire = getInventaire();
-                    List<String> options = new ArrayList<>();
-                    Menu menu = new Menu("Inventaire", this.getNom(), "Inventaire de la bibliothèque", options);
-                    options = new ArrayList<>();
-                    for (Document doc : inventaire) {
-                        String opt = doc.getID() + ": " + doc.getTitre();
-                        if (doc.getID().indexOf('L')>0){
-      //                     if (opt.length() > menu.widthMaxTextM) {
-      //                         options.add(opt.substring(0, menu.widthMaxTextM));
-      //                     }
-                            options.add(opt);
-                          menu.setOptionsM(options);
-                          menu.genMenu();
-                          menu.printMenu();
-                          //  System.out.printf (TEXT_YELLOW+options+TEXT_RESET+"%n");
-
-                        }
-
-                    }
-                    System.out.println(TEXT_YELLOW+"---------------------------------------"+TEXT_RESET);
-
-
-                menuNum=false;
-                } else  {
-                    List<Membre> bottin = getBottin();
-                    List<String> options = new ArrayList<>();
-                    Menu menu = new Menu("Registre", this.getNom(), "Registre des adhérent", options);
-                    options = new ArrayList<>();
-                    for (Membre mem : bottin) {
-                        String opt = mem.getID() + ": " + mem.getNom()+ ", " + mem.getPrenom();
-                        if (opt.length() > menu.widthMaxTextM) {
-                            options.add(opt.substring(0, menu.widthMaxTextM));
-                        } else {
+        Scanner inputU = new Scanner(System.in);
+        List<String> input = new ArrayList<>();
+        String[] infoArr = {"le code du document :", "le code de l'adhérant :"};
+        String tempDoc = "";
+        String tempMem = "";
+        boolean exit = false;
+        for (String info : infoArr) {
+            if (menuNum){
+                List<Document> inventaire = getInventaire();
+                List<String> options = new ArrayList<>();
+                Menu menu = new Menu("Inventaire", this.getNom(), "Inventaire de la bibliothèque", options);
+                options = new ArrayList<>();
+                for (Document doc : inventaire) {
+                    String opt = doc.getID() + ": " + doc.getTitre();
+                    if (doc.getClass().getSimpleName().equals("Livre")){
+                        if (((Livre) doc).getDisponible()) {
                             options.add(opt);
                         }
                     }
-                    menu.setOptionsM(options);
-                    menu.genMenu();
-                    menu.printMenu();
                 }
+                menu.setOptionsM(options);
+                menu.genMenu();
+                menu.printMenu();
                 System.out.printf("Entrez %s \n", info);
-                input.add(inputU.nextLine().strip());
+                String inputDoc = inputU.nextLine().toLowerCase().strip();
+                if (inputDoc.equals("q")) {
+                    exit = true;
+                    break;
+                }
+                tempDoc = options.get(Integer.parseInt(inputDoc) - 1);
+                tempDoc = tempDoc.substring(0, tempDoc.indexOf(":"));
+
+            menuNum=false;
+            } else  {
+                List<Membre> bottin = getBottin();
+                List<String> options = new ArrayList<>();
+                Menu menu = new Menu("Registre", this.getNom(), "Registre des adhérent", options);
+                options = new ArrayList<>();
+                for (Membre mem : bottin) {
+                    String opt = mem.getID() + ": " + mem.getNom()+ ", " + mem.getPrenom();
+                    if (opt.length() > menu.widthMaxTextM) {
+                        options.add(opt.substring(0, menu.widthMaxTextM));
+                    } else {
+                        options.add(opt);
+                    }
+                }
+                menu.setOptionsM(options);
+                menu.genMenu();
+                menu.printMenu();
+                System.out.printf("Entrez %s \n", info);
+                String inputMem = inputU.nextLine().toLowerCase().strip();
+                if (inputMem.equals("q")) {
+                    exit = true;
+                    break;
+                }
+                tempMem = options.get(Integer.parseInt(inputMem));
+                tempMem = tempMem.substring(0, tempMem.indexOf(":"));
             }
-            this.addEmprunt(new Emprunt(input.get(0), input.get(1)));
         }
+        if (!exit) {
+            this.addEmprunt(new Emprunt(tempMem, tempDoc));
+            ((Livre) this.inventaire.get(getDocument(tempDoc).getDocument())).setDisponible(false);
+        }
+    }
+
     public String setExtendedEmprunt(int idx) {
         this.tracker.get(idx).setExtend();
         return this.tracker.get(idx).getDate_In();
@@ -416,9 +429,11 @@ public class Bibliotheque {
         }
         Thread.sleep(3000);
     }
-    public void removeEmprunt ( int tra){
+
+    public void removeEmprunt (int tra){
             this.tracker.remove(tra);
         }
+
     public void destroyEmprunt () throws Exception {
             Scanner inputU = new Scanner(System.in);
             String input;
@@ -433,6 +448,7 @@ public class Bibliotheque {
             System.out.printf("Êtes-vous sûr de vouloir supprimer l'emprunt du document: %s \nOui ou Non?\n", tracker.get(idxD - 1).getDocID());
             input = inputU.nextLine().toLowerCase().strip();
             if (input.equals("oui")) {
+                ((Livre) inventaire.get(getDocument(tracker.get(idxD - 1).getDocID()).getDocument())).setDisponible(true);
                 removeEmprunt(idxD - 1);
                 System.out.println("L'emprunt à été supprimé.");
             } else {
