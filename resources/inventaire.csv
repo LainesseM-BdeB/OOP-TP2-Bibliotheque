@@ -1,4 +1,6 @@
-Livre;D1-V1-L1;Java pour les nuls;Maxime Lainesse;true
+Livre;D1-V1-L1;Java pour les nuls;Maxime Lainesse;false
 BD;D2-V2-BD1;Java pour les nuls en dessins!;Maxime Lainesse;Vincent Poirier
 Journal;D3-J1;Le journal de Baie-Comeau;2022-03-14
 OuvrageReference;D4-V3-R1;L'atlas des patates;Madame Brossard;Alimentation
+Livre;D6-V5-L3;Coder sans maux de tête;Elvis Craton;false
+Livre;D6-V5-L3;La bible des tests unitaires;Stack Overflow;true

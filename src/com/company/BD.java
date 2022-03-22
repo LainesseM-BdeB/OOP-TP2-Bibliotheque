@@ -16,6 +16,10 @@ public class BD extends Volume {
         this.id = super.getID() + "-BD" + idBDNum;
     }
 
+    public void loadID(String ID) {
+        this.id = ID;
+    }
+
     public String getID() {
         return this.id;
     }

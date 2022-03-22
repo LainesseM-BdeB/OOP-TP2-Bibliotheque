@@ -17,6 +17,10 @@ public class OuvrageReference extends Volume {
         this.id = super.getID() + "-R" + idOuvNum;
     }
 
+    public void loadID(String ID) {
+        this.id = ID;
+    }
+
     public String getID() {
         return this.id;
     }

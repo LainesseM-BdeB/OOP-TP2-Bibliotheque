@@ -19,6 +19,10 @@ public class Journal extends Document{
         this.id = super.getID() + "-J" + idJourNum;
     }
 
+    public void loadID(String ID) {
+        this.id = ID;
+    }
+
     public String getID() {
         return this.id;
     }

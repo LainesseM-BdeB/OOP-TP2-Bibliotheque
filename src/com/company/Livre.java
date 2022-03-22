@@ -15,6 +15,10 @@ public class Livre extends Volume{
         this.livID = super.getID() + "-L" + idLivNum;
     }
 
+    public void loadID(String ID) {
+        this.livID = ID;
+    }
+
     public String getID() {
         return this.livID;
     }

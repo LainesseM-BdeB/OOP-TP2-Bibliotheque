@@ -9,11 +9,13 @@ public class Main {
         //Live code for menu DO NOT DELETE OR CHANGE vvvvv
         boolean exit = false;
         Bibliotheque bibli = new Bibliotheque("BDEB", "123 fake street", "Fakecity", "Fakestate", "555-555-5555", "bdeb@fakemail.com");
-        bibli.addDocument(new Livre("Java pour les nuls", "Maxime Lainesse"));
-        bibli.addDocument(new Livre("Coder sans maux de tête", "Elvis Craton"));
-        bibli.addDocument(new BD("Java pour les nuls en dessins!", "Maxime Lainesse", "Vincent Poirier"));
-        bibli.addDocument(new Journal("Le journal de Baie-Comeau", LocalDate.now()));
-        bibli.addDocument(new OuvrageReference("L'atlas des patates", "Madame Brossard", "Alimentation"));
+        bibli.loadInventaire(bibli);
+
+        //bibli.addDocument(new Livre("Java pour les nuls", "Maxime Lainesse"));
+        //bibli.addDocument(new Livre("Coder sans maux de tête", "Elvis Craton"));
+        //bibli.addDocument(new BD("Java pour les nuls en dessins!", "Maxime Lainesse", "Vincent Poirier"));
+        //bibli.addDocument(new Journal("Le journal de Baie-Comeau", LocalDate.now()));
+        //bibli.addDocument(new OuvrageReference("L'atlas des patates", "Madame Brossard", "Alimentation"));
         bibli.addMember(new Contact("Trump","Donald","dtru@stuck.ca","514-123-4567"));
         bibli.addMember(new Contact("Case","Justin","jucas@luck.fr","111-222-6543"));
         bibli.addMember(new Contact("Croteau","Marcel","cristo@puck.ca","853-634-6231"));
@@ -46,6 +48,8 @@ public class Main {
                 default -> {System.out.println("Une erreur c'est produite"); Thread.sleep(3000);}
             }
         } while (!exit);
+
+        bibli.unloadInventaire();
         //Live code for menu DO NOT DELETE OR CHANGE ^^^^^
 
 

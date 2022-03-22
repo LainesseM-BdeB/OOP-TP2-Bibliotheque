@@ -107,12 +107,36 @@ public class Bibliotheque {
         this.inventaire.remove(doc);
     }
 
-    public void loadInventaire() throws FileNotFoundException {
+    public void loadInventaire(Bibliotheque bibli) throws FileNotFoundException, CloneNotSupportedException {
         File file = new File("resources\\inventaire.csv");
         FileReader fread = new FileReader(file.getAbsolutePath());
         BufferedReader bfread = new BufferedReader(fread);
         for (String line : bfread.lines().toList()) {
-            System.out.println(line);
+            String[] test = line.split(";");
+            switch (test[0]) {
+                case "Livre" -> {
+                    Livre tempLivre = new Livre(test[2], test[3]);
+                    tempLivre.loadID(test[1]);
+                    tempLivre.setDisponible(Boolean.getBoolean(test[4]));
+                    bibli.addDocument(tempLivre);
+                }
+                case "BD" -> {
+                    BD tempBD = new BD(test[2], test[3], test[4]);
+                    tempBD.loadID(test[1]);
+                    bibli.addDocument(tempBD);
+                }
+                case "Journal" -> {
+                    Journal tempJournal = new Journal(test[2], LocalDate.parse(test[3]));
+                    tempJournal.loadID(test[1]);
+                    bibli.addDocument(tempJournal);
+                }
+                case "OuvrageReference" -> {
+                    OuvrageReference tempOuvRef = new OuvrageReference(test[2], test[3], test[4]);
+                    tempOuvRef.loadID(test[1]);
+                    bibli.addDocument(tempOuvRef);
+                }
+                default -> System.out.println("Cannot import:" + Arrays.toString(test));
+            }
         }
     }
 
