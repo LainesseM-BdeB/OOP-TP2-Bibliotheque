@@ -167,7 +167,7 @@ public class Bibliotheque {
         Scanner inputU = new Scanner(System.in);
         String input;
         boolean exit = false;
-        Menu menu = new Menu("bottin", this.getNom(), "Annuaire des adhérent", options);
+        Menu menu = new Menu("bottin", this.getNom(), "Annuaire des adhérents", options);
         options = new ArrayList<>();
         for (Membre mem : bottin) {
             String opt = mem.getNom() + ", " + mem.getPrenom();
@@ -200,8 +200,11 @@ public class Bibliotheque {
     private void setBottin() {
         this.bottin = new ArrayList<>();
     }
-    public void addMember(com.company.Membre mem) throws CloneNotSupportedException {
+    public void addMember(Membre mem) throws CloneNotSupportedException {
         this.bottin.add((Membre) mem.clone());
+    }
+    public void addContact(Contact mem) throws CloneNotSupportedException {
+        this.bottin.add((Contact) mem.clone());
     }
     public Recherche getMember(String ID) {
         Recherche response = new Recherche();
@@ -213,12 +216,13 @@ public class Bibliotheque {
         }
         return response;
     }
-    public void loadBottin() throws FileNotFoundException {
+    public void loadBottin(Bibliotheque bibli) throws FileNotFoundException, CloneNotSupportedException  {
         File file = new File("resources\\membres.csv");
         FileReader fread = new FileReader(file.getAbsolutePath());
         BufferedReader bfread = new BufferedReader(fread);
         for (String line : bfread.lines().toList()) {
-            System.out.println(line);
+            String[] tempInfo = line.split(";");
+            bibli.addContact(new Contact(tempInfo[2],tempInfo[3],tempInfo[4],tempInfo[5]));
         }
     }
     public void unloadBottin() throws IOException {
@@ -226,7 +230,7 @@ public class Bibliotheque {
         FileWriter fwrite = new FileWriter(file.getAbsolutePath());
         BufferedWriter bfwrite = new BufferedWriter(fwrite);
         for (Membre mem : this.bottin) {
-            String csvLine = mem.toCsv();
+            String csvLine = ((Contact) mem).toCsv();
             bfwrite.write(csvLine);
             bfwrite.newLine();
         }
@@ -251,8 +255,8 @@ public class Bibliotheque {
             System.out.printf("Entrez %s de l'adhérent:\n", info);
             input.add(inputU.nextLine().strip());
         }
-        this.addMember(new Contact(input.get(0), input.get(1), input.get(2), input.get(3)));
-        System.out.println("L'adhérent à été ajouté au registre");
+        this.addContact(new Contact( input.get(0), input.get(1), input.get(2), input.get(3)));
+        System.out.println("L'adhérent a été ajouté au registre");
         Thread.sleep(3000);
     }
     public void removeMember(int mem) {
@@ -341,12 +345,13 @@ public class Bibliotheque {
         }
         return response;
     }
-    public void loadTracker() throws FileNotFoundException {
+    public void loadTracker(Bibliotheque bibli) throws FileNotFoundException, CloneNotSupportedException {
         File file = new File("resources\\emprunts.csv");
         FileReader fread = new FileReader(file.getAbsolutePath());
         BufferedReader bfread = new BufferedReader(fread);
         for (String line : bfread.lines().toList()) {
-            System.out.println(line);
+            String[] tempInfo = line.split(";");
+         bibli.addEmprunt(new Emprunt(tempInfo[3],tempInfo[2]));
         }
     }
     public void unloadTracker() throws IOException {
@@ -363,11 +368,9 @@ public class Bibliotheque {
     }
     public void makeEmprunt () throws Exception {
         boolean menuNum = true;
-        String TEXT_YELLOW = "\u001B[33m";
-        String TEXT_RESET = "\u001B[0m";
         Scanner inputU = new Scanner(System.in);
         List<String> input = new ArrayList<>();
-        String[] infoArr = {"le code du document :", "le code de l'adhérant :"};
+        String[] infoArr = {"le numéro correspondant au document désiré:", "le numéro correspondant à l'adhérent désiré:"};
         String tempDoc = "";
         String tempMem = "";
         boolean exit = false;
@@ -420,12 +423,12 @@ public class Bibliotheque {
                     exit = true;
                     break;
                 }
-                tempMem = options.get(Integer.parseInt(inputMem));
+                tempMem = options.get(Integer.parseInt(inputMem) -1);
                 tempMem = tempMem.substring(0, tempMem.indexOf(":"));
             }
         }
         if (!exit) {
-            this.addEmprunt(new Emprunt(tempMem, tempDoc));
+            this.addEmprunt(new Emprunt(tempDoc, tempMem));
             ((Livre) this.inventaire.get(getDocument(tempDoc).getDocument())).setDisponible(false);
         }
     }
@@ -449,7 +452,7 @@ public class Bibliotheque {
         input = inputU.nextLine().toLowerCase().strip();
         if (input.equals("oui")) {
             String newDate = setExtendedEmprunt(idxD - 1);
-            System.out.println("L'emprunt à été prolongé jusqu'au: " + newDate);
+            System.out.println("L'emprunt a été prolongé jusqu'au: " + newDate);
         }
         Thread.sleep(3000);
     }
@@ -474,7 +477,7 @@ public class Bibliotheque {
             if (input.equals("oui")) {
                 ((Livre) inventaire.get(getDocument(tracker.get(idxD - 1).getDocID()).getDocument())).setDisponible(true);
                 removeEmprunt(idxD - 1);
-                System.out.println("L'emprunt à été supprimé.");
+                System.out.println("L'emprunt a été supprimé.");
             } else {
                 System.out.println("Aucun emprunt correspondant.");
             }
@@ -571,7 +574,7 @@ public class Bibliotheque {
             input.add(inputU.nextLine().strip());
         }
         this.addDocument(new OuvrageReference(input.get(0), input.get(1), input.get(2)));
-        System.out.println("L'ouvrage de référence à été ajouté à l'inventaire");
+        System.out.println("L'ouvrage de référence a été ajouté à l'inventaire");
         Thread.sleep(3000);
     }
 
@@ -615,7 +618,7 @@ public class Bibliotheque {
             input.add(inputU.nextLine().strip());
         }
         this.addDocument(new Livre(input.get(0), input.get(1)));
-        System.out.println("Le livre à été ajouté à l'inventaire");
+        System.out.println("Le livre a été ajouté à l'inventaire");
         Thread.sleep(3000);
     }
 
@@ -634,7 +637,7 @@ public class Bibliotheque {
         input = inputU.nextLine().toLowerCase().strip();
         if (input.equals("oui")) {
             removeDocument(idxD - 1);
-            System.out.println("Le document à été supprimé de l'inventaire");
+            System.out.println("Le document a été supprimé de l'inventaire");
         } else {
             System.out.println("Aucun document n'a été supprimé de l'inventaire.");
         }

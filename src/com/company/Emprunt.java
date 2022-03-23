@@ -27,7 +27,7 @@ public class Emprunt implements Cloneable {
         empNum++;
     }
     public void setEmpID() {
-        this.empID =docId+"/"+memID+"/"+empNum;
+        this.empID =docId+" / "+memID+" / "+empNum;
     }
     public String getEmpID() {
         return this.empID;

@@ -16,12 +16,12 @@ public class Main {
         //bibli.addDocument(new BD("Java pour les nuls en dessins!", "Maxime Lainesse", "Vincent Poirier"));
         //bibli.addDocument(new Journal("Le journal de Baie-Comeau", LocalDate.now()));
         //bibli.addDocument(new OuvrageReference("L'atlas des patates", "Madame Brossard", "Alimentation"));
-        bibli.addMember(new Contact("Trump","Donald","dtru@stuck.ca","514-123-4567"));
-        bibli.addMember(new Contact("Case","Justin","jucas@luck.fr","111-222-6543"));
-        bibli.addMember(new Contact("Croteau","Marcel","cristo@puck.ca","853-634-6231"));
-        bibli.addMember(new Contact("Tremblay","Sylvie","sylt@buck.com","514-987-6438"));
-        bibli.addEmprunt(new Emprunt("D3-J1","Tru1"));
-        bibli.addEmprunt(new Emprunt("D4-J2","Cas1"));
+
+        bibli.loadInventaire(bibli);
+        bibli.loadBottin(bibli);
+        bibli.loadTracker(bibli);
+
+
 
         //Generating main menu
         List<String> mainOpt = new ArrayList<>();
@@ -48,8 +48,9 @@ public class Main {
                 default -> {System.out.println("Une erreur c'est produite"); Thread.sleep(3000);}
             }
         } while (!exit);
-
         bibli.unloadInventaire();
+        bibli.unloadBottin();
+        bibli.unloadTracker();
         //Live code for menu DO NOT DELETE OR CHANGE ^^^^^
 
 
