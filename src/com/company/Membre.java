@@ -4,10 +4,9 @@ package com.company;
 public class Membre implements Cloneable {
 
     public static int num = 1;
-    //attributs
+    private final int memNum;
     private String nom;
     private String prenom;
-    private int memNum;
     private String ID;
 
 
@@ -22,9 +21,11 @@ public class Membre implements Cloneable {
         this.setID();
         num++;
     }
+
     public void setID() {
-        this.ID = init+memNum;
+        this.ID = init + memNum;
     }
+
     public String getID() {
         return this.ID;
     }
@@ -45,24 +46,26 @@ public class Membre implements Cloneable {
         this.prenom = prenom;
     }
 
-    public void setInit(){
-        if (nom.length()<3){
-            this.init=nom.substring(0,nom.length());
+    public void setInit() {
+        if (nom.length() < 3) {
+            this.init = nom;
         } else {
             this.init = nom.substring(0, 3);
         }
-   }
+    }
 
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
     public void printMem() {
         System.out.printf(
 
-                    "id#: "+this.ID+"%n"
-                    +"Nom: "+this.nom +"%n"
-                    +"Prénom: "+this.prenom +"%n");
+                "id#: " + this.ID + "%n"
+                        + "Nom: " + this.nom + "%n"
+                        + "Prénom: " + this.prenom + "%n");
     }
+
     public String toCsv() {
         String csvLine;
         csvLine = this.getClass().getSimpleName();

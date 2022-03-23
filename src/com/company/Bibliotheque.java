@@ -78,7 +78,7 @@ public class Bibliotheque {
                 } catch (NumberFormatException e) {
                     System.out.println("Une erreur c'est produite. Veuillez entrez un chiffre valide ou Q");
                 }
-            }while (!exit);
+            } while (!exit);
         } else {
             menu.printMenu();
         }
@@ -152,18 +152,19 @@ public class Bibliotheque {
         bfwrite.close();
         fwrite.close();
     }
-//++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+    //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
     //Member
     public List<Membre> getBottin() throws CloneNotSupportedException {
         List<Membre> bottin = new ArrayList<>();
-        for (Membre mem:this.bottin) {
+        for (Membre mem : this.bottin) {
             bottin.add((Membre) mem.clone());
         }
         return bottin;
     }
 
     public void showBottin(boolean isInteractive) throws Exception {
-        List<Membre> bottin =getBottin();
+        List<Membre> bottin = getBottin();
         List<String> options = new ArrayList<>();
         Scanner inputU = new Scanner(System.in);
         String input;
@@ -222,13 +223,13 @@ public class Bibliotheque {
         return response;
     }
 
-    public void loadBottin(Bibliotheque bibli) throws FileNotFoundException, CloneNotSupportedException  {
+    public void loadBottin(Bibliotheque bibli) throws FileNotFoundException, CloneNotSupportedException {
         File file = new File("resources\\membres.csv");
         FileReader fread = new FileReader(file.getAbsolutePath());
         BufferedReader bfread = new BufferedReader(fread);
         for (String line : bfread.lines().toList()) {
             String[] tempInfo = line.split(";");
-            bibli.addContact(new Contact(tempInfo[2],tempInfo[3],tempInfo[4],tempInfo[5]));
+            bibli.addContact(new Contact(tempInfo[2], tempInfo[3], tempInfo[4], tempInfo[5]));
         }
     }
 
@@ -264,7 +265,7 @@ public class Bibliotheque {
             System.out.printf("Entrez %s de l'adhérent:\n", info);
             input.add(inputU.nextLine().strip());
         }
-        this.addContact(new Contact( input.get(0), input.get(1), input.get(2), input.get(3)));
+        this.addContact(new Contact(input.get(0), input.get(1), input.get(2), input.get(3)));
         System.out.println("L'adhérent a été ajouté au registre");
         Thread.sleep(3000);
     }
@@ -321,8 +322,8 @@ public class Bibliotheque {
                 options.add(opt);
             }
         }
-      menu.setOptionsM(options);
-      menu.genMenu();
+        menu.setOptionsM(options);
+        menu.genMenu();
         if (isInteractive) {
             do {
                 menu.printMenu();
@@ -367,7 +368,7 @@ public class Bibliotheque {
         BufferedReader bfread = new BufferedReader(fread);
         for (String line : bfread.lines().toList()) {
             String[] tempInfo = line.split(";");
-            Emprunt tempEmprunt = new Emprunt(tempInfo[3],tempInfo[2]);
+            Emprunt tempEmprunt = new Emprunt(tempInfo[3], tempInfo[2]);
             if (Boolean.parseBoolean(tempInfo[6])) {
                 tempEmprunt.setExtend();
             }
@@ -387,7 +388,8 @@ public class Bibliotheque {
         bfwrite.close();
         fwrite.close();
     }
-    public void makeEmprunt () throws Exception {
+
+    public void makeEmprunt() throws Exception {
         boolean menuNum = true;
         Scanner inputU = new Scanner(System.in);
         List<String> input = new ArrayList<>();
@@ -396,14 +398,14 @@ public class Bibliotheque {
         String tempMem = "";
         boolean exit = false;
         for (String info : infoArr) {
-            if (menuNum){
+            if (menuNum) {
                 List<Document> inventaire = getInventaire();
                 List<String> options = new ArrayList<>();
                 Menu menu = new Menu("Inventaire", this.getNom(), "Inventaire de la bibliothèque", options);
                 options = new ArrayList<>();
                 for (Document doc : inventaire) {
                     String opt = doc.getID() + ": " + doc.getTitre();
-                    if (doc.getClass().getSimpleName().equals("Livre")){
+                    if (doc.getClass().getSimpleName().equals("Livre")) {
                         if (((Livre) doc).getDisponible()) {
                             options.add(opt);
                         }
@@ -421,14 +423,14 @@ public class Bibliotheque {
                 tempDoc = options.get(Integer.parseInt(inputDoc) - 1);
                 tempDoc = tempDoc.substring(0, tempDoc.indexOf(":"));
 
-            menuNum=false;
-            } else  {
+                menuNum = false;
+            } else {
                 List<Membre> bottin = getBottin();
                 List<String> options = new ArrayList<>();
                 Menu menu = new Menu("Registre", this.getNom(), "Registre des adhérent", options);
                 options = new ArrayList<>();
                 for (Membre mem : bottin) {
-                    String opt = mem.getID() + ": " + mem.getNom()+ ", " + mem.getPrenom();
+                    String opt = mem.getID() + ": " + mem.getNom() + ", " + mem.getPrenom();
                     if (opt.length() > menu.widthMaxTextM) {
                         options.add(opt.substring(0, menu.widthMaxTextM));
                     } else {
@@ -444,7 +446,7 @@ public class Bibliotheque {
                     exit = true;
                     break;
                 }
-                tempMem = options.get(Integer.parseInt(inputMem) -1);
+                tempMem = options.get(Integer.parseInt(inputMem) - 1);
                 tempMem = tempMem.substring(0, tempMem.indexOf(":"));
             }
         }
@@ -458,6 +460,7 @@ public class Bibliotheque {
         this.tracker.get(idx).setExtend();
         return this.tracker.get(idx).getDate_In();
     }
+
     public void Extension() throws Exception {
         Scanner inputU = new Scanner(System.in);
         String input;
@@ -478,32 +481,32 @@ public class Bibliotheque {
         Thread.sleep(3000);
     }
 
-    public void removeEmprunt (int tra){
-            this.tracker.remove(tra);
-        }
+    public void removeEmprunt(int tra) {
+        this.tracker.remove(tra);
+    }
 
-    public void destroyEmprunt () throws Exception {
-            Scanner inputU = new Scanner(System.in);
-            String input;
-            int idxD;
-            showTracker(false);
-            System.out.println("Quel emprunt voulez-vous supprimer?:");
-            input = inputU.nextLine().toLowerCase().strip();
-            if (input.equals("q")) {
-                return;
-            }
-            idxD = Integer.parseInt(input);
-            System.out.printf("Êtes-vous sûr de vouloir supprimer l'emprunt du document: %s \nOui ou Non?\n", tracker.get(idxD - 1).getDocID());
-            input = inputU.nextLine().toLowerCase().strip();
-            if (input.equals("oui")) {
-                ((Livre) inventaire.get(getDocument(tracker.get(idxD - 1).getDocID()).getDocument())).setDisponible(true);
-                removeEmprunt(idxD - 1);
-                System.out.println("L'emprunt a été supprimé.");
-            } else {
-                System.out.println("Aucun emprunt correspondant.");
-            }
-            Thread.sleep(3000);
+    public void destroyEmprunt() throws Exception {
+        Scanner inputU = new Scanner(System.in);
+        String input;
+        int idxD;
+        showTracker(false);
+        System.out.println("Quel emprunt voulez-vous supprimer?:");
+        input = inputU.nextLine().toLowerCase().strip();
+        if (input.equals("q")) {
+            return;
         }
+        idxD = Integer.parseInt(input);
+        System.out.printf("Êtes-vous sûr de vouloir supprimer l'emprunt du document: %s \nOui ou Non?\n", tracker.get(idxD - 1).getDocID());
+        input = inputU.nextLine().toLowerCase().strip();
+        if (input.equals("oui")) {
+            ((Livre) inventaire.get(getDocument(tracker.get(idxD - 1).getDocID()).getDocument())).setDisponible(true);
+            removeEmprunt(idxD - 1);
+            System.out.println("L'emprunt a été supprimé.");
+        } else {
+            System.out.println("Aucun emprunt correspondant.");
+        }
+        Thread.sleep(3000);
+    }
 
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

@@ -4,9 +4,7 @@ import java.time.LocalDate;
 
 public class Emprunt implements Cloneable {
 
-    public static LocalDate date=LocalDate.now();
-
-    //attributs
+    public static LocalDate date = LocalDate.now();
     private static int empNum = 1;
     private String date_Out;
     private String date_In;
@@ -14,9 +12,9 @@ public class Emprunt implements Cloneable {
     private String docId;
     private boolean extend = false;
     private String empID;
-    private String prolonge="Oui";
+    private String prolonge = "Oui";
 
-    public Emprunt(String pdocID, String pmemID){
+    public Emprunt(String pdocID, String pmemID) {
 
         this.setDocId(pdocID);
         this.setMemID(pmemID);
@@ -26,18 +24,21 @@ public class Emprunt implements Cloneable {
 
         empNum++;
     }
+
     public void setEmpID() {
-        this.empID =docId+" / "+memID+" / "+empNum;
+        this.empID = docId + " / " + memID + " / " + empNum;
     }
+
     public String getEmpID() {
         return this.empID;
     }
+
     public String getDate_Out() {
         return date_Out;
     }
 
     public void setDate_Out() {
-        this.date_Out= String.valueOf(LocalDate.now());
+        this.date_Out = String.valueOf(LocalDate.now());
     }
 
     public String getDate_In() {
@@ -53,7 +54,7 @@ public class Emprunt implements Cloneable {
     }
 
     public void setMemID(String memID) {
-        this.memID =memID;
+        this.memID = memID;
     }
 
     public String getDocID() {
@@ -74,8 +75,8 @@ public class Emprunt implements Cloneable {
 
         } else {
             this.extend = true;
-            this.date_In=LocalDate.parse(this.date_In).plusDays(7).toString();
-            this.prolonge="Non";
+            this.date_In = LocalDate.parse(this.date_In).plusDays(7).toString();
+            this.prolonge = "Non";
         }
     }
 
@@ -85,15 +86,16 @@ public class Emprunt implements Cloneable {
                 "Emprunt ID: " + this.empID + "%n"
                         + "Document ID: " + this.docId + "%n"
                         + "Adhérent ID: " + this.memID + "%n"
-                        +"Date de sortie: "+this.date_Out +"%n"
-                        +"Date de retour: "+this.date_In+"%n"
-                        + "Prolongation permise: " + this.prolonge+ "%n");
+                        + "Date de sortie: " + this.date_Out + "%n"
+                        + "Date de retour: " + this.date_In + "%n"
+                        + "Prolongation permise: " + this.prolonge + "%n");
     }
 
 
     public Object clone() throws CloneNotSupportedException {
         return super.clone();
     }
+
     public String toCsv() {
         String csvLine;
         csvLine = this.getClass().getSimpleName();
@@ -105,7 +107,7 @@ public class Emprunt implements Cloneable {
         csvLine += ";" + this.isExtend();
         return csvLine;
     }
-    }
+}
 
 
 

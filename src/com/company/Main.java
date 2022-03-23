@@ -34,7 +34,10 @@ public class Main {
                 case "2" -> invMenu(bibli);
                 case "3" -> memMenu(bibli);
                 case "4" -> System.out.println("Info n'est pas encore fonctionel");
-                default -> {System.out.println("Une erreur c'est produite"); Thread.sleep(3000);}
+                default -> {
+                    System.out.println("Une erreur c'est produite");
+                    Thread.sleep(3000);
+                }
             }
         } while (!exit);
         bibli.unloadInventaire();
@@ -117,10 +120,7 @@ public class Main {
         //System.out.println("###################################################################");
 
 
-
-
-
-         //
+        //
         //System.out.println();
         //
         //
@@ -178,11 +178,15 @@ public class Main {
                     case 1 -> bibli.showInventaire(true);
                     case 2 -> bibli.createDocument();
                     case 3 -> bibli.destroyDocument();
-                    default -> {System.out.println("Une erreur c'est produite"); Thread.sleep(3000);}
+                    default -> {
+                        System.out.println("Une erreur c'est produite");
+                        Thread.sleep(3000);
+                    }
                 }
             }
         } while (!exit);
     }
+
     private static void memMenu(Bibliotheque bibli) throws Exception {
         //Generating registre menu
         List<String> memOpt = new ArrayList<>();
@@ -205,43 +209,46 @@ public class Main {
                     case 1 -> bibli.showBottin(true);
                     case 2 -> bibli.makeContact();
                     case 3 -> bibli.destroyMember();
-                    default -> {System.out.println("Une erreur c'est produite");
+                    default -> {
+                        System.out.println("Une erreur c'est produite");
                         Thread.sleep(3000);
                     }
                 }
             }
         } while (!exit);
     }
-        private static void traMenu(Bibliotheque bibli) throws Exception{
-            //Generating Emprunt menu
-            List<String> traOpt = new ArrayList<>();
-            Scanner inputU = new Scanner(System.in);
-            String input;
-            boolean exit = false;
-            traOpt.add("Afficher la liste des Emprunts");
-            traOpt.add("Enregistrer un emprunt");
-            traOpt.add("Annuler un emprunt");
-            traOpt.add("Prolonger un emprunt");
-            Menu traM = new Menu("tracker", bibli.getNom(), "Gestion des emprunts", traOpt);
-            traM.genMenu();
-            do {
-                traM.printMenu();
-                System.out.println("Choisissez une des options:");
-                input = inputU.nextLine().toLowerCase().strip();
-                if (input.equals("q")) {
-                    exit = true;
-                } else {
-                    switch (Integer.parseInt(input)) {
-                        case 1 -> bibli.showTracker(true);
-                        case 2 -> bibli.makeEmprunt();
-                        case 3 -> bibli.destroyEmprunt();
-                        case 4 -> bibli.Extension();
-                        default -> {System.out.println("Une erreur c'est produite");
-                            Thread.sleep(3000);
-                        }
+
+    private static void traMenu(Bibliotheque bibli) throws Exception {
+        //Generating Emprunt menu
+        List<String> traOpt = new ArrayList<>();
+        Scanner inputU = new Scanner(System.in);
+        String input;
+        boolean exit = false;
+        traOpt.add("Afficher la liste des Emprunts");
+        traOpt.add("Enregistrer un emprunt");
+        traOpt.add("Annuler un emprunt");
+        traOpt.add("Prolonger un emprunt");
+        Menu traM = new Menu("tracker", bibli.getNom(), "Gestion des emprunts", traOpt);
+        traM.genMenu();
+        do {
+            traM.printMenu();
+            System.out.println("Choisissez une des options:");
+            input = inputU.nextLine().toLowerCase().strip();
+            if (input.equals("q")) {
+                exit = true;
+            } else {
+                switch (Integer.parseInt(input)) {
+                    case 1 -> bibli.showTracker(true);
+                    case 2 -> bibli.makeEmprunt();
+                    case 3 -> bibli.destroyEmprunt();
+                    case 4 -> bibli.Extension();
+                    default -> {
+                        System.out.println("Une erreur c'est produite");
+                        Thread.sleep(3000);
                     }
                 }
-            } while (!exit);
+            }
+        } while (!exit);
     }
 }
 

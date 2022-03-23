@@ -1,8 +1,8 @@
 package com.company;
 
 public class Volume extends Document {
-    private String auteur;
     private static int idVolNum = 1;
+    private String auteur;
     private String volID;
 
     public Volume(String titre, String auteur) {
@@ -20,12 +20,12 @@ public class Volume extends Document {
         return this.volID;
     }
 
-    public void setAuteur(String auteur) {
-        this.auteur = auteur;
-    }
-
     public String getAuteur() {
         return this.auteur;
+    }
+
+    public void setAuteur(String auteur) {
+        this.auteur = auteur;
     }
 
     public void printInfo() {

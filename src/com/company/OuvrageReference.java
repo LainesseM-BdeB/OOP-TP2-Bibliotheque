@@ -2,8 +2,8 @@ package com.company;
 
 public class OuvrageReference extends Volume {
 
-    private String sujet;
     private static int idOuvNum = 1;
+    private String sujet;
     private String id;
 
     public OuvrageReference(String titre, String auteur, String sujet) {
@@ -25,12 +25,12 @@ public class OuvrageReference extends Volume {
         return this.id;
     }
 
-    public void setSujet(String sujet) {
-        this.sujet = sujet;
-    }
-
     public String getSujet() {
         return this.sujet;
+    }
+
+    public void setSujet(String sujet) {
+        this.sujet = sujet;
     }
 
     public String getType() {

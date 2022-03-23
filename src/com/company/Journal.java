@@ -2,10 +2,10 @@ package com.company;
 
 import java.time.LocalDate;
 
-public class Journal extends Document{
+public class Journal extends Document {
 
-    private LocalDate date;
     private static int idJourNum = 1;
+    private LocalDate date;
     private String id;
 
     public Journal(String titre, LocalDate date) {

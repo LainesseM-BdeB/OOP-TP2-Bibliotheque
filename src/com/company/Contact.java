@@ -1,4 +1,3 @@
-
 package com.company;
 
 public class Contact extends Membre {
@@ -7,7 +6,7 @@ public class Contact extends Membre {
     private String cell;
 
     public Contact(String p_nom, String p_prenom, String courriel, String cell) {
-        super(p_nom,p_prenom);
+        super(p_nom, p_prenom);
         setCourriel(courriel);
         setCell(cell);
 
@@ -18,21 +17,21 @@ public class Contact extends Membre {
         return courriel;
     }
 
-        public void setCourriel(String courriel) {
-            this.courriel = courriel;
-        }
-
-    public void setCell(String cell) {
-        this.cell = cell;
+    public void setCourriel(String courriel) {
+        this.courriel = courriel;
     }
 
     public String getCell() {
         return cell;
     }
 
+    public void setCell(String cell) {
+        this.cell = cell;
+    }
+
     public void printMem() {
         System.out.printf("#ID:\n%s\nNom:\n%s\nPrénom:\n%s\nCourriel:\n%s\nTéléphone:\n%s\n"
-                ,getID(),getNom(),getPrenom(),getCourriel(), getCell());
+                , getID(), getNom(), getPrenom(), getCourriel(), getCell());
     }
 
     public String toCsv() {

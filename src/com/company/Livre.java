@@ -1,8 +1,8 @@
 package com.company;
 
-public class Livre extends Volume{
-    private boolean estDisponible = true;
+public class Livre extends Volume {
     private static int idLivNum = 1;
+    private boolean estDisponible = true;
     private String livID;
 
     public Livre(String titre, String auteur) {
@@ -23,12 +23,12 @@ public class Livre extends Volume{
         return this.livID;
     }
 
-    public void setDisponible(boolean estDisponible) {
-        this.estDisponible = estDisponible;
-    }
-
     public boolean getDisponible() {
         return this.estDisponible;
+    }
+
+    public void setDisponible(boolean estDisponible) {
+        this.estDisponible = estDisponible;
     }
 
     public String getType() {

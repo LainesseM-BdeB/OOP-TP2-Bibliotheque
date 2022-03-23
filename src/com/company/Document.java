@@ -1,8 +1,8 @@
 package com.company;
 
-public class Document implements Cloneable{
-    private String titre;
+public class Document implements Cloneable {
     private static int idDocNum = 1;
+    private String titre;
     private String docID;
 
     public Document(String titre) {
@@ -19,12 +19,12 @@ public class Document implements Cloneable{
         return this.docID;
     }
 
-    public void setTitre(String titre) {
-        this.titre = titre;
-    }
-
     public String getTitre() {
         return this.titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
     }
 
     public void printInfo() {

@@ -1,8 +1,8 @@
 package com.company;
 
 public class BD extends Volume {
-    private String dessinateur;
     private static int idBDNum = 1;
+    private String dessinateur;
     private String id;
 
     public BD(String titre, String auteur, String dessinateur) {
@@ -24,12 +24,12 @@ public class BD extends Volume {
         return this.id;
     }
 
-    public void setDessinateur(String dessinateur) {
-        this.dessinateur = dessinateur;
-    }
-
     public String getDessinateur() {
         return this.dessinateur;
+    }
+
+    public void setDessinateur(String dessinateur) {
+        this.dessinateur = dessinateur;
     }
 
     public String getType() {
