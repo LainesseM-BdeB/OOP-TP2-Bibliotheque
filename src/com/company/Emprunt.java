@@ -102,7 +102,7 @@ public class Emprunt implements Cloneable {
         csvLine += ";" + this.getDocID();
         csvLine += ";" + this.getDate_Out();
         csvLine += ";" + this.getDate_In();
-
+        csvLine += ";" + this.isExtend();
         return csvLine;
     }
     }

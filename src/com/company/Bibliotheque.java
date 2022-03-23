@@ -117,7 +117,7 @@ public class Bibliotheque {
                 case "Livre" -> {
                     Livre tempLivre = new Livre(test[2], test[3]);
                     tempLivre.loadID(test[1]);
-                    tempLivre.setDisponible(Boolean.getBoolean(test[4]));
+                    tempLivre.setDisponible(Boolean.parseBoolean(test[4]));
                     bibli.addDocument(tempLivre);
                 }
                 case "BD" -> {
@@ -161,6 +161,7 @@ public class Bibliotheque {
         }
         return bottin;
     }
+
     public void showBottin(boolean isInteractive) throws Exception {
         List<Membre> bottin =getBottin();
         List<String> options = new ArrayList<>();
@@ -197,15 +198,19 @@ public class Bibliotheque {
             menu.printMenu();
         }
     }
+
     private void setBottin() {
         this.bottin = new ArrayList<>();
     }
+
     public void addMember(Membre mem) throws CloneNotSupportedException {
         this.bottin.add((Membre) mem.clone());
     }
+
     public void addContact(Contact mem) throws CloneNotSupportedException {
         this.bottin.add((Contact) mem.clone());
     }
+
     public Recherche getMember(String ID) {
         Recherche response = new Recherche();
         for (Membre mem : this.bottin) {
@@ -216,6 +221,7 @@ public class Bibliotheque {
         }
         return response;
     }
+
     public void loadBottin(Bibliotheque bibli) throws FileNotFoundException, CloneNotSupportedException  {
         File file = new File("resources\\membres.csv");
         FileReader fread = new FileReader(file.getAbsolutePath());
@@ -225,18 +231,20 @@ public class Bibliotheque {
             bibli.addContact(new Contact(tempInfo[2],tempInfo[3],tempInfo[4],tempInfo[5]));
         }
     }
+
     public void unloadBottin() throws IOException {
         File file = new File("resources\\membres.csv");
         FileWriter fwrite = new FileWriter(file.getAbsolutePath());
         BufferedWriter bfwrite = new BufferedWriter(fwrite);
         for (Membre mem : this.bottin) {
-            String csvLine = ((Contact) mem).toCsv();
+            String csvLine = mem.toCsv();
             bfwrite.write(csvLine);
             bfwrite.newLine();
         }
         bfwrite.close();
         fwrite.close();
     }
+
     public void makeMember() throws CloneNotSupportedException {
         Scanner inputU = new Scanner(System.in);
         List<String> input = new ArrayList<>();
@@ -247,6 +255,7 @@ public class Bibliotheque {
         }
         this.addMember(new com.company.Membre(input.get(0), input.get(1)));
     }
+
     public void makeContact() throws CloneNotSupportedException, InterruptedException {
         Scanner inputU = new Scanner(System.in);
         List<String> input = new ArrayList<>();
@@ -259,9 +268,11 @@ public class Bibliotheque {
         System.out.println("L'adhérent a été ajouté au registre");
         Thread.sleep(3000);
     }
+
     public void removeMember(int mem) {
         this.bottin.remove(mem);
     }
+
     public void destroyMember() throws Exception {
         Scanner inputU = new Scanner(System.in);
         String input;
@@ -293,6 +304,7 @@ public class Bibliotheque {
         }
         return tracker;
     }
+
     public void showTracker(boolean isInteractive) throws Exception {
         List<Emprunt> tracker = getTracker();
         List<String> options = new ArrayList<>();
@@ -329,12 +341,15 @@ public class Bibliotheque {
             menu.printMenu();
         }
     }
+
     private void setTracker() {
         this.tracker = new ArrayList<>();
     }
+
     public void addEmprunt(Emprunt tra) throws CloneNotSupportedException {
         this.tracker.add((Emprunt) tra.clone());
     }
+
     public Recherche getEmprunt(String ID) {
         Recherche response = new Recherche();
         for (Emprunt tra : this.tracker) {
@@ -345,15 +360,21 @@ public class Bibliotheque {
         }
         return response;
     }
+
     public void loadTracker(Bibliotheque bibli) throws FileNotFoundException, CloneNotSupportedException {
         File file = new File("resources\\emprunts.csv");
         FileReader fread = new FileReader(file.getAbsolutePath());
         BufferedReader bfread = new BufferedReader(fread);
         for (String line : bfread.lines().toList()) {
             String[] tempInfo = line.split(";");
-         bibli.addEmprunt(new Emprunt(tempInfo[3],tempInfo[2]));
+            Emprunt tempEmprunt = new Emprunt(tempInfo[3],tempInfo[2]);
+            if (Boolean.parseBoolean(tempInfo[6])) {
+                tempEmprunt.setExtend();
+            }
+            bibli.addEmprunt(tempEmprunt);
         }
     }
+
     public void unloadTracker() throws IOException {
         File file = new File("resources\\emprunts.csv");
         FileWriter fwrite = new FileWriter(file.getAbsolutePath());

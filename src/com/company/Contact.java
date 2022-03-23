@@ -34,4 +34,14 @@ public class Contact extends Membre {
         System.out.printf("#ID:\n%s\nNom:\n%s\nPrénom:\n%s\nCourriel:\n%s\nTéléphone:\n%s\n"
                 ,getID(),getNom(),getPrenom(),getCourriel(), getCell());
     }
+
+    public String toCsv() {
+        String csvline = super.toCsv();
+        String[] csvSplit = csvline.split(";");
+        csvSplit[0] = this.getClass().getSimpleName();
+        csvline = String.join(";", csvSplit);
+        csvline += ";" + this.courriel;
+        csvline += ";" + this.cell;
+        return csvline;
+    }
 }

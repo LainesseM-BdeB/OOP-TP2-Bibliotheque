@@ -10,19 +10,8 @@ public class Main {
         boolean exit = false;
         Bibliotheque bibli = new Bibliotheque("BDEB", "123 fake street", "Fakecity", "Fakestate", "555-555-5555", "bdeb@fakemail.com");
         bibli.loadInventaire(bibli);
-
-        //bibli.addDocument(new Livre("Java pour les nuls", "Maxime Lainesse"));
-        //bibli.addDocument(new Livre("Coder sans maux de tête", "Elvis Craton"));
-        //bibli.addDocument(new BD("Java pour les nuls en dessins!", "Maxime Lainesse", "Vincent Poirier"));
-        //bibli.addDocument(new Journal("Le journal de Baie-Comeau", LocalDate.now()));
-        //bibli.addDocument(new OuvrageReference("L'atlas des patates", "Madame Brossard", "Alimentation"));
-
-        bibli.loadInventaire(bibli);
         bibli.loadBottin(bibli);
         bibli.loadTracker(bibli);
-
-
-
         //Generating main menu
         List<String> mainOpt = new ArrayList<>();
         mainOpt.add("Emprunt");
