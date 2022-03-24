@@ -43,4 +43,17 @@ public class Contact extends Membre {
         csvline += ";" + this.cell;
         return csvline;
     }
+ /*
+    public String toCsv() {
+        String csvLine;
+        csvLine = this.getClass().getSimpleName();
+        csvLine += ";" + this.getID();
+        csvLine += ";" + this.getNom();
+        csvLine += ";" + this.getPrenom();
+        csvLine += ";" + this.getCourriel();
+        csvLine += ";" + this.getCell();
+
+      return csvLine;
+  }
+ */
 }

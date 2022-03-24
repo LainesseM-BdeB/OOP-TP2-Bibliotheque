@@ -21,7 +21,6 @@ public class Membre implements Cloneable {
         this.setID();
         num++;
     }
-
     public void setID() {
         this.ID = init + memNum;
     }

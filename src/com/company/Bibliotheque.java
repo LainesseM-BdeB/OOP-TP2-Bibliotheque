@@ -315,7 +315,7 @@ public class Bibliotheque {
         Menu menu = new Menu("tracker", this.getNom(), "Suivi des emprunts", options);
         options = new ArrayList<>();
         for (Emprunt tra : tracker) {
-            String opt = tra.getEmpID() + ": " + tra.getMemID() + ": " + tra.getDocID() + ": " + tra.getDate_Out() + ": " + tra.getDate_In();
+            String opt = tra.getEmpID() + ": " + tra.getDocID() + ": " + tra.getMemID() + ": " + tra.getDate_Out() + ": " + tra.getDate_In();
             if (opt.length() > menu.widthMaxTextM) {
                 options.add(opt.substring(0, menu.widthMaxTextM));
             } else {
